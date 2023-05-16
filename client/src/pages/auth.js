@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 
 export const Auth = () => {
   return (
@@ -41,28 +39,28 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h2>Login</h2>
-        <Form.Group controlId="username">
-          <Form.Label>Username:</Form.Label>
-          <Form.Control
+        <div className="form-group">
+          <label htmlFor="username">Username:</label>
+          <input
             type="text"
+            id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password:</label>
+          <input
             type="password"
+            id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
-      </Form>
+        </div>
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 };
@@ -89,28 +87,29 @@ const Register = () => {
 
   return (
     <div className="auth-container">
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h2>Register</h2>
-        <Form.Group controlId="username">
-          <Form.Label controlId="username">Username:</Form.Label>
-          <Form.Control
+        <div className="form-group">
+          <label htmlFor="username">Username:</label>
+          <input
             type="text"
+            id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label controlId="password">Password:</Form.Label>
-          <Form.Control
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password:</label>
+          <input
             type="password"
+            id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Register
-        </Button>
-      </Form>
+        </div>
+        <button type="submit">Register</button>
+      </form>
+        
     </div>
   );
 };

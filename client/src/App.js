@@ -5,6 +5,7 @@ import { Auth } from "./pages/auth";
 import { CreateItem } from "./pages/create-item";
 import { Home } from "./pages/home";
 import { SavedItems } from "./pages/saved-items";
+import { CreatedItems } from "./pages/created-items";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/create-item" element={<CreateItem />} />
           <Route path="/saved-items" element={<SavedItems />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/created-items" element={<CreatedItems />} />
         </Routes>
       </Router>
     </div>

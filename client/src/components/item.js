@@ -27,5 +27,4 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem }) => {
     </li>
   );
 };
-
-export default Item;
+export default Item;
