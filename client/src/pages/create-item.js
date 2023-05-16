@@ -3,6 +3,7 @@ import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { Form, Button } from "react-bootstrap";
 
 export const CreateItem = () => {
   const userID = useGetUserID();
@@ -61,70 +62,84 @@ export const CreateItem = () => {
   };
 
   return (
-    <div className="create-items">
+    <div className="create-item">
       <h2>Create Item</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={item.name}
-          onChange={handleChange}
-        />
-        <label htmlFor="details">Details</label>
-        <textarea
-          id="details"
-          name="details"
-          value={item.details}
-          onChange={handleChange}
-        ></textarea>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            placeholder="name"
+            value={item.name}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-        <label htmlFor="district">District</label>
-        <select
-          id="district"
-          name="district"
-          value={item.district}
-          onChange={handleChange}
-        >
-          <option value="">Select District</option>
-          <option value="North">North</option>
-          <option value="South">South</option>
-          <option value="Central">Central</option>
-        </select>
+        <Form.Group controlId="details">
+          <Form.Label>Details</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="details"
+            value={item.details}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-        <label htmlFor="phoneNumber">Phone Number</label>
-        <input
-          type="tel"
-          id="phoneNumber"
-          name="phoneNumber"
-          value={item.phoneNumber}
-          onChange={handleChange}
-        />
+        <Form.Group controlId="district">
+          <Form.Label>District</Form.Label>
+          <Form.Select
+            as="select"
+            name="district"
+            value={item.district}
+            onChange={handleChange}
+          >
+            <option value="">Select District</option>
+            <option value="North">North</option>
+            <option value="South">South</option>
+            <option value="Central">Central</option>
+          </Form.Select>
+        </Form.Group>
 
-        <label htmlFor="imageUrl">Image URL</label>
-        <input
-          type="text"
-          id="imageUrl"
-          name="imageUrl"
-          value={item.imageUrl}
-          onChange={handleChange}
-        />
+        <Form.Group controlId="phoneNumber">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            type="tel"
+            name="phoneNumber"
+            value={item.phoneNumber}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-        <label htmlFor="cost">Price</label>
-        <input
-          type="number"
-          min="1"
-          step="any"
-          id="cost"
-          name="cost"
-          value={item.cost}
-          onChange={handleChange}
-        />
-        <button type="submit">Create Item</button>
+        <Form.Group controlId="imageUrl">
+          <Form.Label>Image URL</Form.Label>
+          <Form.Control
+            type="text"
+            name="imageUrl"
+            value={item.imageUrl}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="cost">
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            type="number"
+            min="1"
+            step="any"
+            name="cost"
+            value={item.cost}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <div class="pt-3 d-grid gap-2">
+          <Button variant="outline-info" type="submit">
+            Create Item
+          </Button>
+        </div>
         {error && <p>{error}</p>}
-      </form>
-        
+      </Form>
     </div>
   );
 };

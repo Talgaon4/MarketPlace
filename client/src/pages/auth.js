@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 
 export const Auth = () => {
   return (
@@ -87,29 +88,29 @@ const Register = () => {
 
   return (
     <div className="auth-container">
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <h2>Register</h2>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
+        <Form.Group controlId="username">
+          <Form.Label>Username:</Form.Label>
+          <Form.Control
             type="text"
-            id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
+        </Form.Group>
+        <Form.Group controlId="password">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
             type="password"
-            id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-        </div>
-        <button type="submit">Register</button>
-      </form>
-        
+        </Form.Group>
+        <div class="pt-3 ">
+        <Button variant="primary" type="submit">
+          Register
+        </Button></div>
+      </Form>
     </div>
   );
 };

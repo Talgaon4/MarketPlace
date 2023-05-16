@@ -1,4 +1,4 @@
-/* .App {
+ .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,7 +11,7 @@ body {
   margin: 0;
   padding: 0;
 }
-
+/*
 .auth {
   display: flex;
   justify-content: center;
@@ -69,7 +69,7 @@ a {
   font-size: 25px;
 }
 
-.create-items {
+.create-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
