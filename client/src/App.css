@@ -16,12 +16,25 @@
   background-color: rgba(252, 252, 252, 0.5); /* Add transparency if needed */
 }
 
-
-.hero h1 {
-  font-family: 'Russo One', sans-serif;
-  padding: 4rem 0 ;
-
+.header-container h1 {
+  font-family: "Russo One", sans-serif;
 }
+
+.header-home h1 {
+  -webkit-text-stroke: 1px rgb(4, 0, 11);
+  font-family: "Russo One", sans-serif;
+  font-size: 4.5rem;
+  line-height: 6rem;
+  font-weight: 600;
+  color: rgb(91, 86, 101);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.header-home span {
+  font-size: 6rem;
+  line-height: 7rem;
+}
+
 body {
   margin: 0;
   padding: 0;

@@ -2,7 +2,7 @@ import React from "react";
 
 function Header({ title }) {
   return (
-    <div className="hero d-flex align-items-center">
+    <div className="header-container py-4">
       <h1>{title}</h1>
     </div>
   );

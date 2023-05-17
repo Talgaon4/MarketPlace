@@ -1,20 +1,36 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Header from "../components/header";
+import HeaderHome from "../components/header-home";
 
-export const MyNavbar = ({ title }) => {
+export const MyNavbar = () => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = () => {
     setCookies("access_token", "");
     window.localStorage.clear();
     navigate("/auth");
   };
+
+  const titleMap = {
+    "/create-item": "Create Item",
+    "/saved-items": "Saved Items",
+    "/created-items": "My Items",
+    "/auth": "Login/Register",
+  };
+
+  // Get the current path
+  const currentPath = location.pathname;
+
+  // Get the corresponding title for the current path
+  const title = titleMap[currentPath] || "";
+
   return (
     <div className="header-wrapper">
       <div className="background-image">
@@ -44,9 +60,13 @@ export const MyNavbar = ({ title }) => {
               </Nav>
             </Container>
           </Navbar>
-          <Header title={title} />
+          {currentPath === "" || currentPath === "/" ? (
+            <HeaderHome title={title} />
+          ) : (
+            <Header title={title} />
+          )}
         </Container>
-      </div>{" "}
+      </div>
     </div>
   );
 };

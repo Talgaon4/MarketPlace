@@ -4,7 +4,7 @@ import { useGetUserID } from "../hooks/useGetUserID";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Form, Button } from "react-bootstrap";
-import Header from "../components/header";
+import { MyNavbar } from "../components/navbar";
 
 export const CreateItem = () => {
   const userID = useGetUserID();
@@ -21,7 +21,7 @@ export const CreateItem = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
+  const title = "create item";
   const handleChange = (event) => {
     const { name, value } = event.target;
     setItem({ ...item, [name]: value });
@@ -64,8 +64,6 @@ export const CreateItem = () => {
 
   return (
     <div className="create-item">
-      <Header title="Create Item" />
-
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
