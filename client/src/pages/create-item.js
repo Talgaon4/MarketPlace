@@ -4,6 +4,7 @@ import { useGetUserID } from "../hooks/useGetUserID";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Form, Button } from "react-bootstrap";
+import Header from "../components/header";
 
 export const CreateItem = () => {
   const userID = useGetUserID();
@@ -63,7 +64,8 @@ export const CreateItem = () => {
 
   return (
     <div className="create-item">
-      <h2>Create Item</h2>
+      <Header title="Create Item" />
+
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>

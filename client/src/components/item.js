@@ -1,4 +1,7 @@
 import React from "react";
+import { Card, Button } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
+import ListGroup from "react-bootstrap/ListGroup";
 
 const Item = ({ item, saveItem, isItemSaved, cancelSaveItem }) => {
   const handleSaveItem = () => {
@@ -10,21 +13,29 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem }) => {
   };
 
   return (
-    <li key={item._id}>
-      <div>
-        <h2>{item.name}</h2>
-        <button onClick={handleSaveItem}>
+    <Card class="" style={{ width: "18rem" }}>
+      <Card.Body>
+        <Card.Title>{item.name}</Card.Title>
+        <Card.Text>{item.details}</Card.Text>
+      </Card.Body>
+      <Image
+        width={171}
+        height={180}
+        rounded
+        src={item.imageUrl}
+        alt={item.name}
+      />
+      <ListGroup className="list-group-flush">
+        <ListGroup.Item>Area: {item.district}</ListGroup.Item>
+        <ListGroup.Item>Phone number: {item.phoneNumber}</ListGroup.Item>
+        <ListGroup.Item>Price: {item.cost} ILS</ListGroup.Item>
+      </ListGroup>
+      <Card.Body className="instructions">
+        <Button onClick={handleSaveItem}>
           {isItemSaved() ? "Cancel Save" : "Save"}
-        </button>
-      </div>
-      <div className="instructions">
-        <p>{item.details}</p>
-        <p>{item.district}</p>
-      </div>
-      <img src={item.imageUrl} alt={item.name} />
-      <p>Phone number: {item.phoneNumber} </p>
-      <p>Price: {item.cost} shekels</p>
-    </li>
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
-export default Item;
+export default Item;

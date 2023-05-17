@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <MyNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create-item" element={<CreateItem />} />

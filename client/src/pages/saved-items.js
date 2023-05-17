@@ -31,19 +31,18 @@ export const SavedItems = () => {
 
   return (
     <div>
-      <h1>Saved Items</h1>
       {savedItems.length === 0 ? (
         <div>No saved items found.</div>
       ) : (
         <ul>
-    {savedItems.map((item) => (
-      <Item
-        key={item._id}
-        item={item}
-        isItemSaved={() => true}
-        cancelSaveItem={() => {}}
-      />
-    ))}
+          {savedItems.map((item) => (
+            <Item
+              key={item._id}
+              item={item}
+              isItemSaved={() => true}
+              cancelSaveItem={() => {}}
+            />
+          ))}
         </ul>
       )}
     </div>
