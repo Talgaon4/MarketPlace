@@ -63,14 +63,43 @@ router.get("/:itemId", async (req, res) => {
   }
 });
 
-// Save an item
-router.put("/", async (req, res) => {
-  const item = await ItemsModel.findById(req.body.itemID);
-  const user = await UserModel.findById(req.body.userID);
+// // Save an item
+// router.put("/", async (req, res) => {
+//   const item = await ItemsModel.findById(req.body.itemID);
+//   const user = await UserModel.findById(req.body.userID);
+//   try {
+//     user.savedItems.push(item);
+//     await user.save();
+//     res.status(201).json({ savedItems: user.savedItems });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+// // Save or update an item
+// Save or update an item
+router.put("/:id", async (req, res) => {
+  const itemId = req.params.id;
+  const updatedItem = req.body;
+
   try {
-    user.savedItems.push(item);
-    await user.save();
-    res.status(201).json({ savedItems: user.savedItems });
+    if (itemId) {
+      // Update existing item
+      const item = await ItemsModel.findByIdAndUpdate(itemId, updatedItem, {
+        new: true,
+      });
+      res.status(200).json(item);
+    } else {
+      // Save new item
+      const newItem = await ItemsModel.create(updatedItem);
+
+      // Assuming `userId` is obtained from the request (e.g., req.user.id)
+      const userId = req.user.id;
+      const user = await UserModel.findById(userId);
+      user.savedItems.push(newItem);
+      await user.save();
+
+      res.status(201).json(newItem);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -117,5 +146,26 @@ router.get("/createdItems/:userId", async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.delete("/:itemId", async (req, res) => {
+  const itemId = req.params.itemId;
 
+  try {
+    // Find the item by its _id and remove it
+    await ItemsModel.findByIdAndRemove(itemId);
+
+    // Remove the item reference from the user's createdItems array
+    const user = await UserModel.findOne({ createdItems: itemId });
+    if (user) {
+      user.createdItems.pull(itemId);
+      await user.save();
+    }
+
+    res.sendStatus(204); // Send a successful response with no content
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the item" });
+  }
+});
 export { router as itemsRouter };

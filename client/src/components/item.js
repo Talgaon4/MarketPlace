@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 
-const Item = ({ item, saveItem, isItemSaved, cancelSaveItem }) => {
+const Item = ({ item, saveItem, isItemSaved, cancelSaveItem ,children }) => {
   const handleSaveItem = () => {
     if (isItemSaved()) {
       cancelSaveItem(item._id);
@@ -34,7 +34,8 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem }) => {
         <Button onClick={handleSaveItem}>
           {isItemSaved() ? "Cancel Save" : "Save"}
         </Button>
-      </Card.Body>
+        
+      </Card.Body>{children} {/* Render the children here */}
     </Card>
   );
 };
