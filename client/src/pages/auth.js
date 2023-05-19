@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Form, Button, Alert } from "react-bootstrap";
 
 export const Auth = () => {
   const [showRegister, setShowRegister] = useState(false);
@@ -27,6 +26,7 @@ const Login = ({ handleToggleForm }) => {
   const [_, setCookies] = useCookies(["access_token"]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,6 +41,7 @@ const Login = ({ handleToggleForm }) => {
       window.localStorage.setItem("userID", result.data.userID);
       navigate("/");
     } catch (error) {
+      setError("Invalid username or password");
       console.error(error);
     }
   };
@@ -50,6 +51,7 @@ const Login = ({ handleToggleForm }) => {
       <div className="auth-container">
         <Form onSubmit={handleSubmit}>
           <h2>Login</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
           <Form.Group controlId="username">
             <Form.Label>Username:</Form.Label>
             <Form.Control
