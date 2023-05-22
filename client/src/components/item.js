@@ -29,6 +29,7 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
         <ListGroup.Item>Area: {item.district}</ListGroup.Item>
         <ListGroup.Item>Phone number: {item.phoneNumber}</ListGroup.Item>
         <ListGroup.Item>Price: {item.cost} ILS</ListGroup.Item>
+        <ListGroup.Item>Created on: {item.createdAt}</ListGroup.Item>
       </ListGroup>
       <Card.Body className="instructions">
         <Button onClick={handleSaveItem}>
@@ -39,4 +40,5 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
     </Card>
   );
 };
+
 export default Item;

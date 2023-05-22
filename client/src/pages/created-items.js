@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
 import Item from "../components/item";
-import { Alert } from "react-bootstrap";
-import { useNavigate, Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export const CreatedItems = () => {
   const [createdItems, setCreatedItems] = useState([]);
@@ -20,7 +19,11 @@ export const CreatedItems = () => {
         const response = await axios.get(
           `http://localhost:3001/items/createdItems/${userID}`
         );
-        setCreatedItems(response.data.createdItems);
+        const itemsWithDates = response.data.createdItems.map((item) => ({
+          ...item,
+          createdAt: new Date(item.createdAt).toLocaleDateString(),
+        }));
+        setCreatedItems(itemsWithDates);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -47,18 +50,16 @@ export const CreatedItems = () => {
   };
 
   const handleEditItem = (itemId) => {
-    // Find the item that needs to be edited
     const editedItem = createdItems.find((item) => item._id === itemId);
     if (editedItem) {
-      // Navigate to the CreateItem component with the item details as props
       navigate("/create-item", { state: { item: editedItem } });
     }
   };
+
   return (
     <div>
-      <h1>My Items</h1>
       {createdItems.length === 0 ? (
-        <div>You dont have items yet.</div>
+        <div>You don't have any items.</div>
       ) : (
         <ul>
           {createdItems.map((item) => (
@@ -85,10 +86,11 @@ export const CreatedItems = () => {
                 >
                   Edit
                 </Button>
+                <p>Created on: {item.createdAt}</p>
               </React.Fragment>
             </Item>
           ))}
-          {deleteMessage && <div>{deleteMessage}</div>}{" "}
+          {deleteMessage && <div>{deleteMessage}</div>}
         </ul>
       )}
     </div>

@@ -85,7 +85,7 @@ router.get("/:itemId", async (req, res) => {
 router.put("/", async (req, res) => {
   const itemID = req.body.itemID;
   const userID = req.body.userID;
-  
+
   try {
     const user = await UserModel.findById(userID);
     if (user.savedItems.includes(itemID)) {
@@ -101,7 +101,8 @@ router.put("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-// update an item
+
+// Update an item
 router.put("/:id", async (req, res) => {
   const itemId = req.params.id;
   const updatedItem = req.body;
@@ -157,6 +158,7 @@ router.get("/createdItems/:userId", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 router.delete("/users/:userId/:itemId", async (req, res) => {
   const userId = req.params.userId;
   const itemId = req.params.itemId;
@@ -211,4 +213,5 @@ router.delete("/:itemId", async (req, res) => {
       .json({ error: "An error occurred while deleting the item" });
   }
 });
+
 export { router as itemsRouter };
