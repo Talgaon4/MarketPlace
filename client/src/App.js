@@ -6,6 +6,7 @@ import { CreateItem } from "./pages/create-item";
 import { Home } from "./pages/home";
 import { SavedItems } from "./pages/saved-items";
 import { CreatedItems } from "./pages/created-items";
+import { SearchItems } from "./pages/search-items";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <MyNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search-items" element={<SearchItems />} />
           <Route path="/create-item" element={<CreateItem />} />
           <Route path="/saved-items" element={<SavedItems />} />
           <Route path="/auth" element={<Auth />} />
