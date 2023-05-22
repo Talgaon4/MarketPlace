@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 
-const itemSchema = mongoose.Schema({
+const { Schema, model } = mongoose;
+
+const itemSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -26,10 +28,14 @@ const itemSchema = mongoose.Schema({
     required: true,
   },
   userOwner: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-export const ItemsModel = mongoose.model("items", itemSchema);
+export const ItemsModel = model("Item", itemSchema);
