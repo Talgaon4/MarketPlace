@@ -86,7 +86,6 @@ export const CreatedItems = () => {
                 >
                   Edit
                 </Button>
-                <p>Created on: {item.createdAt}</p>
               </React.Fragment>
             </Item>
           ))}

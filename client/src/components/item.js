@@ -12,6 +12,16 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
     }
   };
 
+  let formattedDate = "N/A";
+  console.log(item.createdAt)
+  if (item.createdAt && new Date(item.createdAt).toString() !== "Invalid Date") {
+    formattedDate = new Date(item.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Body>
@@ -29,7 +39,7 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
         <ListGroup.Item>Area: {item.district}</ListGroup.Item>
         <ListGroup.Item>Phone number: {item.phoneNumber}</ListGroup.Item>
         <ListGroup.Item>Price: {item.cost} ILS</ListGroup.Item>
-        <ListGroup.Item>Created on: {item.createdAt}</ListGroup.Item>
+        <ListGroup.Item>Created on: {formattedDate}</ListGroup.Item>
       </ListGroup>
       <Card.Body className="instructions">
         <Button onClick={handleSaveItem}>

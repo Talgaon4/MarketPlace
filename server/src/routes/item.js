@@ -34,17 +34,18 @@ router.get("/", async (req, res) => {
 });
 
 // Create a new item
+// Create a new item
 router.post("/", verifyToken, async (req, res) => {
   const item = new ItemsModel({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
-    image: req.body.image,
     cost: req.body.cost,
     district: req.body.district,
     details: req.body.details,
     phoneNumber: req.body.phoneNumber,
     imageUrl: req.body.imageUrl,
     userOwner: req.body.userOwner,
+    createdAt: Date.now() // Set the current timestamp as createdAt
   });
 
   try {
@@ -58,11 +59,13 @@ router.post("/", verifyToken, async (req, res) => {
     res.status(201).json({
       createdItem: {
         name: result.name,
-        image: result.image,
         cost: result.cost,
         details: result.details,
         district: result.district,
         phoneNumber: result.phoneNumber,
+        imageUrl: result.imageUrl,
+        userOwner: result.userOwner,
+        createdAt: result.createdAt,
         _id: result._id,
       },
     });

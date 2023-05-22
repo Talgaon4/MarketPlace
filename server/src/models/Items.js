@@ -34,7 +34,7 @@ const itemSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: false,
   },
 });
 
