@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Form, Button } from "react-bootstrap";
-import { MyNavbar } from "../components/navbar";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const CreateItem = () => {
   const userID = useGetUserID();
   const [cookies, _] = useCookies(["access_token"]);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [item, setItem] = useState({
     name: "",
     details: "",
@@ -19,32 +20,6 @@ export const CreateItem = () => {
     userOwner: userID,
   });
   const [error, setError] = useState("");
-
-  const navigate = useNavigate();
-  const title = "create item";
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setItem({ ...item, [name]: value });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (validateForm()) {
-      try {
-        await axios.post(
-          "http://localhost:3001/items",
-          { ...item },
-          {
-            headers: { authorization: cookies.access_token },
-          }
-        );
-        alert("Item Created");
-        navigate("/");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
 
   const validateForm = () => {
     if (
@@ -62,6 +37,63 @@ export const CreateItem = () => {
     return true;
   };
 
+  useEffect(() => {
+    if (location.state && location.state.item) {
+      // If an item prop is present in the location state, update the item state
+      setItem(location.state.item);
+    } else {
+      // It's a new item, initialize the item state
+      setItem({
+        name: "",
+        details: "",
+        cost: 0,
+        imageUrl: "",
+        district: "",
+        phoneNumber: "",
+        userOwner: userID,
+      });
+    }
+  }, [location.state, userID]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setItem((prevItem) => ({
+      ...prevItem,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (validateForm()) {
+      try {
+        if (item._id) {
+          // If item has an ID, it is an existing item, so perform an update
+          await axios.put(
+            `http://localhost:3001/items/${item._id}`,
+            { ...item },
+            {
+              headers: { authorization: cookies.access_token },
+            }
+          );
+          alert("Item Updated");
+        } else {
+          // Otherwise, it is a new item, so perform a create
+          await axios.post(
+            "http://localhost:3001/items",
+            { ...item },
+            {
+              headers: { authorization: cookies.access_token },
+            }
+          );
+          alert("Item Created");
+        }
+        navigate("/");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
   return (
     <div className="create-item">
       <Form onSubmit={handleSubmit}>
@@ -133,9 +165,9 @@ export const CreateItem = () => {
           />
         </Form.Group>
 
-        <div class="pt-3 d-grid gap-2">
+        <div className="pt-3 d-grid gap-2">
           <Button variant="outline-info" type="submit">
-            Create Item
+            {item._id ? "Edit Item" : "Create Item"}
           </Button>
         </div>
         {error && <p>{error}</p>}

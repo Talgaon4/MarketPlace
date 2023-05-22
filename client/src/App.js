@@ -20,6 +20,7 @@ function App() {
           <Route path="/saved-items" element={<SavedItems />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/created-items" element={<CreatedItems />} />
+          <Route path="/create-item/:id" element={<CreateItem />} />
         </Routes>
       </Router>
     </div>

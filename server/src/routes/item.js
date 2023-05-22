@@ -101,6 +101,21 @@ router.put("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+// update an item
+router.put("/:id", async (req, res) => {
+  const itemId = req.params.id;
+  const updatedItem = req.body;
+
+  try {
+    // Update existing item
+    const item = await ItemsModel.findByIdAndUpdate(itemId, updatedItem, {
+      new: true,
+    });
+    res.status(200).json(item);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Get the IDs of saved items
 router.get("/savedItems/ids/:userId", async (req, res) => {
@@ -142,5 +157,58 @@ router.get("/createdItems/:userId", async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.delete("/users/:userId/:itemId", async (req, res) => {
+  const userId = req.params.userId;
+  const itemId = req.params.itemId;
 
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const savedItemIndex = user.savedItems.findIndex(
+      (item) => item._id.toString() === itemId
+    );
+
+    if (savedItemIndex !== -1) {
+      user.savedItems.splice(savedItemIndex, 1);
+      await user.save();
+      res.status(200).json({ message: "Item removed from saved items" });
+    } else {
+      res.status(404).json({ error: "Item not found in saved items" });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "An error occurred while removing the item" });
+  }
+});
+
+router.delete("/:itemId", async (req, res) => {
+  const itemId = req.params.itemId;
+
+  try {
+    // Find the item by its _id and remove it
+    await ItemsModel.findByIdAndRemove(itemId);
+
+    // Remove the item reference from the user's createdItems array
+    const user = await UserModel.findOne({ createdItems: itemId });
+    if (user) {
+      user.createdItems.pull(itemId);
+      await user.save();
+    }
+    // Remove the item from savedItems of all users
+    await UserModel.updateMany(
+      { savedItems: itemId },
+      { $pull: { savedItems: itemId } }
+    );
+    res.sendStatus(204); // Send a successful response with no content
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the item" });
+  }
+});
 export { router as itemsRouter };
