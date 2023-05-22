@@ -36,7 +36,12 @@ export const MyNavbar = () => {
     <div className="header-wrapper">
       <div className="background-image">
         <Container>
-          <Navbar bg="transparent" expand="lg">
+          <Navbar
+            expand="lg"
+            variant="dark"
+            className="nav-style"
+            bg=" transparent "
+          >
             <Container style={{ padding: 0 }}>
               <Navbar.Brand as={Link} to="/">
                 Home

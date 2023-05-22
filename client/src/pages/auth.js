@@ -110,7 +110,7 @@ const Register = ({ handleToggleForm }) => {
 
   return (
     <container class="main-div px-4 px-lg-5 mt-5">
-      <div className="auth-container">
+      <div className="">
         <Form onSubmit={handleSubmit}>
           <h2>Register</h2>
           <Form.Group controlId="username">
@@ -141,7 +141,7 @@ const Register = ({ handleToggleForm }) => {
             type="button"
             onClick={handleToggleForm}
           >
-            Allready registered? Press here
+            Allready have an acount? Press here
           </Button>
         </div>
       </div>
