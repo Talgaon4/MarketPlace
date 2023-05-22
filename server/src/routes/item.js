@@ -8,7 +8,25 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const result = await ItemsModel.find({});
+    const district = req.query.district;
+    const minPrice = req.query.minPrice;
+    const maxPrice = req.query.maxPrice;
+
+    let query = {};
+
+    if (district) {
+      query.district = district;
+    }
+
+    if (minPrice && maxPrice) {
+      query.cost = { $gte: minPrice, $lte: maxPrice };
+    } else if (minPrice) {
+      query.cost = { $gte: minPrice };
+    } else if (maxPrice) {
+      query.cost = { $lte: maxPrice };
+    }
+
+    const result = await ItemsModel.find(query);
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json(err);
@@ -65,10 +83,18 @@ router.get("/:itemId", async (req, res) => {
 
 // Save an item
 router.put("/", async (req, res) => {
-  const item = await ItemsModel.findById(req.body.itemID);
-  const user = await UserModel.findById(req.body.userID);
+  const itemID = req.body.itemID;
+  const userID = req.body.userID;
+  
   try {
-    user.savedItems.push(item);
+    const user = await UserModel.findById(userID);
+    if (user.savedItems.includes(itemID)) {
+      // Item already saved, remove it
+      user.savedItems.pull(itemID);
+    } else {
+      // Item not saved, save it
+      user.savedItems.push(itemID);
+    }
     await user.save();
     res.status(201).json({ savedItems: user.savedItems });
   } catch (err) {
@@ -80,7 +106,7 @@ router.put("/", async (req, res) => {
 router.get("/savedItems/ids/:userId", async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userId);
-    res.status(201).json({ savedItems: user?.savedItems });
+    res.status(200).json({ savedItems: user?.savedItems });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -95,8 +121,7 @@ router.get("/savedItems/:userId", async (req, res) => {
       _id: { $in: user.savedItems },
     });
 
-    console.log(savedItems);
-    res.status(201).json({ savedItems });
+    res.status(200).json({ savedItems });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
