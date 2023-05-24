@@ -4,6 +4,7 @@ import axios from "axios";
 import Item from "../components/item";
 import { Alert, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
 
 export const CreatedItems = () => {
   const [createdItems, setCreatedItems] = useState([]);
@@ -57,41 +58,45 @@ export const CreatedItems = () => {
   };
 
   return (
-    <div>
-      {createdItems.length === 0 ? (
-        <div>You don't have any items.</div>
-      ) : (
-        <ul>
-          {createdItems.map((item) => (
-            <Item
-              key={item._id}
-              item={item}
-              isItemSaved={() => true}
-              cancelSaveItem={() => {}}
-            >
-              <React.Fragment>
-                <Button
-                  className="my-1"
-                  variant="outline-info"
-                  onClick={() => handleDeleteItem(item._id)}
+    <Container fluid className="px-4 px-lg-5 bg-dark ">
+      <div>
+        {createdItems.length === 0 ? (
+          <div>You don't have any items.</div>
+        ) : (
+          <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+            {createdItems.map((item) => (
+              <div className="col-mb-5 my-4">
+                <Item
+                  key={item._id}
+                  item={item}
+                  isItemSaved={() => true}
+                  cancelSaveItem={() => {}}
                 >
-                  Delete
-                </Button>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Button
-                  className="my-1"
-                  variant="outline-info"
-                  to={`/create-item/${item._id}`}
-                  onClick={() => handleEditItem(item._id)}
-                >
-                  Edit
-                </Button>
-              </React.Fragment>
-            </Item>
-          ))}
-          {deleteMessage && <div>{deleteMessage}</div>}
-        </ul>
-      )}
-    </div>
+                  <React.Fragment>
+                    <Button
+                      className="my-1"
+                      variant="outline-info"
+                      onClick={() => handleDeleteItem(item._id)}
+                    >
+                      Delete
+                    </Button>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    <Button
+                      className="my-1"
+                      variant="outline-info"
+                      to={`/create-item/${item._id}`}
+                      onClick={() => handleEditItem(item._id)}
+                    >
+                      Edit
+                    </Button>
+                  </React.Fragment>
+                </Item>
+              </div>
+            ))}
+            {deleteMessage && <div>{deleteMessage}</div>}
+          </div>
+        )}
+      </div>
+    </Container>
   );
 };

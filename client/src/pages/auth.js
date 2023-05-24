@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Alert } from "react-bootstrap";
-
+import {
+  Form,
+  Button,
+  Alert,
+  Container,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
+import astronautImage from "../images/astronaut.png";
 export const Auth = () => {
   const [showRegister, setShowRegister] = useState(false);
 
@@ -47,44 +55,60 @@ const Login = ({ handleToggleForm }) => {
   };
 
   return (
-    <container class="main-div px-4 px-lg-5 mt-5">
-      <div className="auth-container">
-        <Form onSubmit={handleSubmit}>
-          <h2>Login</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form.Group controlId="username">
-            <Form.Label>Username:</Form.Label>
-            <Form.Control
-              type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="password">
-            <Form.Label>Password:</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </Form.Group>
+    <Container fluid className=" create-item  bg-dark">
+      <div>
+        <h1 className="page-title">Login</h1>
+      </div>
+
+      <Row className="pb-5">
+        <Col className="pb-5">
+          <Form className="align-self-center" onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form.Group controlId="username">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </Form.Group>
+            <div className="pt-2">
+              <Button variant="primary" type="submit">
+                Login
+              </Button>
+            </div>
+          </Form>
+
           <div className="pt-2">
-            <Button variant="primary" type="submit">
-              Login
+            <Button
+              variant="outline-info"
+              type="button"
+              onClick={handleToggleForm}
+            >
+              Unregistered? Press here
             </Button>
           </div>
-        </Form>
-        <div className="pt-2">
-          <Button
-            variant="outline-info"
-            type="button"
-            onClick={handleToggleForm}
-          >
-            Unregistered? Press here
-          </Button>
-        </div>
-      </div>
-    </container>
+        </Col>
+        <Col className="pb-5 d-flex justify-content-center" md="auto">
+          <div className="astro">
+            <Image
+              width={300}
+              rounded
+              src={astronautImage} // Use the imported image as the source
+            />
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
@@ -109,42 +133,56 @@ const Register = ({ handleToggleForm }) => {
   };
 
   return (
-    <container class="main-div px-4 px-lg-5 mt-5">
-      <div className="auth-container">
-        <Form onSubmit={handleSubmit}>
-          <h2>Register</h2>
-          <Form.Group controlId="username">
-            <Form.Label controlId="username">Username:</Form.Label>
-            <Form.Control
-              type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="password">
-            <Form.Label controlId="password">Password:</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </Form.Group>
+    <Container fluid className=" create-item  bg-dark">
+      <div>
+        <h1 className="page-title">Register</h1>
+      </div>
+      <Row className="pb-5">
+        <Col className="pb-5">
+          <Form onSubmit={handleSubmit}>
+            <h2>Register</h2>
+            <Form.Group controlId="username">
+              <Form.Label controlId="username">Username:</Form.Label>
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label controlId="password">Password:</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </Form.Group>
+            <div className="pt-2">
+              <Button variant="primary" type="submit">
+                Register
+              </Button>
+            </div>
+          </Form>
           <div className="pt-2">
-            <Button variant="primary" type="submit">
-              Register
+            <Button
+              variant="outline-warning"
+              type="button"
+              onClick={handleToggleForm}
+            >
+              Allready have an acount? Press here
             </Button>
           </div>
-        </Form>
-        <div className="pt-2">
-          <Button
-            variant="outline-warning"
-            type="button"
-            onClick={handleToggleForm}
-          >
-            Allready registered? Press here
-          </Button>
-        </div>
-      </div>
-    </container>
+        </Col>
+        <Col className="pb-5 d-flex justify-content-center" md="auto">
+          <div className="astro">
+            <Image
+              width={300}
+              rounded
+              src={astronautImage} // Use the imported image as the source
+            />
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };

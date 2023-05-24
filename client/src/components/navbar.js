@@ -4,8 +4,6 @@ import { useCookies } from "react-cookie";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Header from "../components/header";
-import HeaderHome from "../components/header-home";
 
 export const MyNavbar = () => {
   const [cookies, setCookies] = useCookies(["access_token"]);
@@ -36,7 +34,12 @@ export const MyNavbar = () => {
     <div className="header-wrapper">
       <div className="background-image">
         <Container>
-          <Navbar bg="transparent" expand="lg">
+          <Navbar
+            expand="lg"
+            variant="dark"
+            className="nav-style"
+            bg=" transparent "
+          >
             <Container style={{ padding: 0 }}>
               <Navbar.Brand as={Link} to="/">
                 Home
@@ -64,11 +67,7 @@ export const MyNavbar = () => {
               </Nav>
             </Container>
           </Navbar>
-          {currentPath === "" || currentPath === "/" ? (
-            <HeaderHome title={title} />
-          ) : (
-            <Header title={title} />
-          )}
+         
         </Container>
       </div>
     </div>

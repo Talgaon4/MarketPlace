@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
 import Item from "../components/item";
-import { Card, Button, Row, Col } from "react-bootstrap";
 import { Range } from "react-range";
+
+import Container from "react-bootstrap/Container";
 
 export const SearchItems = () => {
   const [items, setItems] = useState([]);
@@ -79,35 +80,41 @@ export const SearchItems = () => {
   };
 
   return (
-    <container className="main-div px-4 px-lg-5 mt-5">
+    <Container fluid className="px-4 px-lg-5 bg-dark ">
       <div>
-        <h1>Items</h1>
+        <h1 className="page-title">Items</h1>
       </div>
-      <div>
-        <label htmlFor="district">Filter by District:</label>
-        <select id="district" value={selectedDistrict} onChange={handleDistrictChange}>
+      <div className="d-flex align-items-start filter">
+        <label htmlFor="district">Filter by District: &nbsp;</label>
+        <select
+          className="dropdown ml-3"
+          id="district"
+          value={selectedDistrict}
+          onChange={handleDistrictChange}
+        >
           <option value="">All</option>
           <option value="North">North</option>
           <option value="South">South</option>
           <option value="Central">Central</option>
         </select>
       </div>
-      <div>
+      <div className="filter p-3">
         <label htmlFor="priceRange">Price Range:</label>
         <Range
           id="priceRange"
           step={10}
           min={1}
           max={9999}
+
           values={priceRange}
           onChange={handlePriceRangeChange}
           renderTrack={({ props, children }) => (
             <div
+              className="my-2"
               {...props}
               style={{
                 ...props.style,
                 height: "6px",
-                width: "100%",
                 backgroundColor: "#ccc",
               }}
             >
@@ -128,13 +135,18 @@ export const SearchItems = () => {
             />
           )}
         />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <span>{priceRange[0]}</span>
           <span>{priceRange[1]}</span>
         </div>
       </div>
       <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
-        {items.map((item, index) => (
+        {items.map((item) => (
           <div className="col-mb-5 my-4" key={item._id}>
             <Item
               className=""
@@ -146,6 +158,6 @@ export const SearchItems = () => {
           </div>
         ))}
       </div>
-    </container>
+    </Container>
   );
 };
