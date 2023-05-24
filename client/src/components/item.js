@@ -29,18 +29,19 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
   }
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Body>
-        <Card.Title>{item.name}</Card.Title>
-        <Card.Text>{item.details}</Card.Text>
-      </Card.Body>
-      <Image
-        width={171}
-        height={180}
+    <Card style={{ width: "16rem" }} className="items">
+      <Image className="align-self-center pt-3"
+        width={100}
+        height={130}
         rounded
         src={item.imageUrl}
         alt={item.name}
       />
+      <Card.Body>
+        <Card.Title>{item.name}</Card.Title>
+        <Card.Text>{item.details}</Card.Text>
+      </Card.Body>
+      
       <ListGroup className="list-group-flush">
         <ListGroup.Item>Area: {item.district}</ListGroup.Item>
         <ListGroup.Item>Phone number: {item.phoneNumber}</ListGroup.Item>
@@ -48,13 +49,11 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
         <ListGroup.Item>Created on: {formattedDate}</ListGroup.Item>
       </ListGroup>
       <Card.Body className="instructions">
-        <Button onClick={handleSaveItem}>
+        <Button  className="btn" onClick={handleSaveItem}>
           {isItemSaved() ? "Cancel Save" : "Save"}
-        </Button>
+        </Button> <Button className="btn" onClick={() => setShowModal(true)}>More details</Button>
       </Card.Body>
-      <Card.Body className="instructions">
-        <Button onClick={() => setShowModal(true)}>More details</Button>
-      </Card.Body>
+     
       {showModal && (
         <Popup
           showModal={showModal}

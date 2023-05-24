@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { useCookies } from "react-cookie";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container, Image, Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
+import astronautImage from "../images/astronaut.png";
 
 export const CreateItem = () => {
   const userID = useGetUserID();
@@ -95,83 +96,100 @@ export const CreateItem = () => {
     }
   };
   return (
-    <div className="create-item">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            placeholder="name"
-            value={item.name}
-            onChange={handleChange}
-          />
-        </Form.Group>
+    <Container fluid className=" create-item  bg-dark">
+      <div>
+        <h1 className="page-title">Create Item</h1>
+      </div>
 
-        <Form.Group controlId="details">
-          <Form.Label>Details</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="details"
-            value={item.details}
-            onChange={handleChange}
-          />
-        </Form.Group>
+      <Row className="pb-5">
+        <Col className="pb-5 d-flex justify-content-center">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                placeholder="name"
+                value={item.name}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-        <Form.Group controlId="district">
-          <Form.Label>District</Form.Label>
-          <Form.Select
-            as="select"
-            name="district"
-            value={item.district}
-            onChange={handleChange}
-          >
-            <option value="">Select District</option>
-            <option value="North">North</option>
-            <option value="South">South</option>
-            <option value="Central">Central</option>
-          </Form.Select>
-        </Form.Group>
+            <Form.Group controlId="details">
+              <Form.Label>Details</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="details"
+                value={item.details}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-        <Form.Group controlId="phoneNumber">
-          <Form.Label>Phone Number</Form.Label>
-          <Form.Control
-            type="tel"
-            name="phoneNumber"
-            value={item.phoneNumber}
-            onChange={handleChange}
-          />
-        </Form.Group>
+            <Form.Group controlId="district">
+              <Form.Label>District</Form.Label>
+              <Form.Select
+                as="select"
+                name="district"
+                value={item.district}
+                onChange={handleChange}
+              >
+                <option value="">Select District</option>
+                <option value="North">North</option>
+                <option value="South">South</option>
+                <option value="Central">Central</option>
+              </Form.Select>
+            </Form.Group>
 
-        <Form.Group controlId="imageUrl">
-          <Form.Label>Image URL</Form.Label>
-          <Form.Control
-            type="text"
-            name="imageUrl"
-            value={item.imageUrl}
-            onChange={handleChange}
-          />
-        </Form.Group>
+            <Form.Group controlId="phoneNumber">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="tel"
+                name="phoneNumber"
+                value={item.phoneNumber}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-        <Form.Group controlId="cost">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            type="number"
-            min="1"
-            step="any"
-            name="cost"
-            value={item.cost}
-            onChange={handleChange}
-          />
-        </Form.Group>
+            <Form.Group controlId="imageUrl">
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control
+                type="text"
+                name="imageUrl"
+                value={item.imageUrl}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-        <div className="pt-3 d-grid gap-2">
-          <Button variant="outline-info" type="submit">
-            {item._id ? "Edit Item" : "Create Item"}
-          </Button>
-        </div>
-        {error && <p>{error}</p>}
-      </Form>
-    </div>
+            <Form.Group controlId="cost">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                min="1"
+                step="any"
+                name="cost"
+                value={item.cost}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <div className="pt-3 d-grid gap-2">
+              <Button variant="outline-info" type="submit">
+                {item._id ? "Edit Item" : "Create Item"}
+              </Button>
+            </div>
+            {error && <p>{error}</p>}
+          </Form>
+        </Col>
+        <Col  className="pb-5 d-flex justify-content-center" md="auto">
+          <div className="astro">
+            <Image
+              width={300}
+              rounded
+              src={astronautImage} // Use the imported image as the source
+            />
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
