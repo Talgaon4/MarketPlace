@@ -16,7 +16,6 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
   };
 
   let formattedDate = "N/A";
-  console.log(item.createdAt);
   if (
     item.createdAt &&
     new Date(item.createdAt).toString() !== "Invalid Date"

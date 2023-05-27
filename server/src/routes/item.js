@@ -34,7 +34,6 @@ router.get("/", async (req, res) => {
 });
 
 // Create a new item
-// Create a new item
 router.post("/", verifyToken, async (req, res) => {
   const item = new ItemsModel({
     _id: new mongoose.Types.ObjectId(),
@@ -45,13 +44,12 @@ router.post("/", verifyToken, async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     imageUrl: req.body.imageUrl,
     userOwner: req.body.userOwner,
-    createdAt: Date.now() // Set the current timestamp as createdAt
+    createdAt: Date.now(),
   });
 
   try {
     const result = await item.save();
 
-    // Update the createdItems array of the user
     const user = await UserModel.findById(req.body.userOwner);
     user.createdItems.push(result._id);
     await user.save();
@@ -92,10 +90,8 @@ router.put("/", async (req, res) => {
   try {
     const user = await UserModel.findById(userID);
     if (user.savedItems.includes(itemID)) {
-      // Item already saved, remove it
       user.savedItems.pull(itemID);
     } else {
-      // Item not saved, save it
       user.savedItems.push(itemID);
     }
     await user.save();
@@ -111,7 +107,6 @@ router.put("/:id", async (req, res) => {
   const updatedItem = req.body;
 
   try {
-    // Update existing item
     const item = await ItemsModel.findByIdAndUpdate(itemId, updatedItem, {
       new: true,
     });
@@ -149,13 +144,20 @@ router.get("/savedItems/:userId", async (req, res) => {
 
 // Get created items by user ID
 router.get("/createdItems/:userId", async (req, res) => {
-  try {
-    const user = await UserModel.findById(req.params.userId);
-    const createdItems = await ItemsModel.find({
-      _id: { $in: user.createdItems },
-    });
+  const { userId } = req.params;
 
-    res.status(200).json({ createdItems });
+  try {
+    const user = await UserModel.findById(userId);
+
+    if (user.isAdmin) {
+      const createdItems = await ItemsModel.find({});
+      res.status(200).json({ createdItems });
+    } else {
+      const createdItems = await ItemsModel.find({
+        _id: { $in: user.createdItems },
+      });
+      res.status(200).json({ createdItems });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -194,21 +196,19 @@ router.delete("/:itemId", async (req, res) => {
   const itemId = req.params.itemId;
 
   try {
-    // Find the item by its _id and remove it
     await ItemsModel.findByIdAndRemove(itemId);
 
-    // Remove the item reference from the user's createdItems array
     const user = await UserModel.findOne({ createdItems: itemId });
     if (user) {
       user.createdItems.pull(itemId);
       await user.save();
     }
-    // Remove the item from savedItems of all users
+
     await UserModel.updateMany(
       { savedItems: itemId },
       { $pull: { savedItems: itemId } }
     );
-    res.sendStatus(204); // Send a successful response with no content
+    res.sendStatus(204);
   } catch (err) {
     console.log(err);
     res
