@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 
 const Popup = ({ showModal, setShowModal, content }) => {
   return (
-    <Modal show={showModal} onHide={() => setShowModal(false)}>
+    <Modal className="modal " show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton>
         <Modal.Title>Item Details</Modal.Title>
       </Modal.Header>
@@ -12,7 +12,6 @@ const Popup = ({ showModal, setShowModal, content }) => {
         <Button variant="secondary" onClick={() => setShowModal(false)}>
           Close
         </Button>
-        {/* Add any additional buttons or actions */}
       </Modal.Footer>
     </Modal>
   );

@@ -54,13 +54,13 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
       </Card.Body>
      
       {showModal && (
-        <Popup
+        <Popup 
           showModal={showModal}
           setShowModal={setShowModal}
           content={
             <div>
               <h4>Item Name: {item.name}</h4>
-              <Image
+              <Image className="align-self-center pt-3"
                 width={171}
                 height={180}
                 rounded

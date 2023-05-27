@@ -2,16 +2,49 @@
   background-color: #14162e;
   width: 100%;
 }
+.footer {
+  background-color: #14162e;
+  width: 100%;
+}
+
+.icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+}
+
+.icon-circle:hover{
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  z-index: 2; 
+  cursor: pointer; 
+}
+.icon-2 {
+  background-color: #01b89a;
+}
+.icon-3 {
+  background-color: #fff;
+}
+.icon-1{
+  
+  background-color: #6f2dff;
+}
 
 .items {
   font-family: "Dosis", sans-serif;
 }
+
 .btn {
   background-color: #01e4bf !important;
   color: #fff !important;
   border: none !important;
 }
-
+.modal {
+  font-family: "Dosis", sans-serif;
+}
 .bg-dark {
   background-image: url("images/bg-dark.png");
   background-repeat: repeat-y;
