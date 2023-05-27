@@ -1,6 +1,7 @@
 import React from "react";
 import astronautImage from "../images/astronaut.png";
 import { Col, Row, Container, Image, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (
@@ -14,18 +15,18 @@ export const Home = () => {
           </h1>
           <p className="pt-2 pb-5">
             <span>Discover</span> and <span>explore</span> a wide range of
-            gaiming products on our platform. <br />
+            gaming products on our platform. <br />
             Save your favorite items, and even unleash your creativity by
             selling <span>your own gaming treasures</span>.
             <br />
             MarketHub is your go-to <span>Gaming Marketplace!</span>
             <br />
             Get ready to level up your gaming experience with{" "}
-            <span>MarketHub</span>, where the world of gaming awaits you!
+            <span>Gaming Space</span>, where the world of gaming awaits you!
           </p>
           <div>
-            <Button>Sell your products!</Button>{" "}
-            <Button className="btn2">Explore community products</Button>
+            <Button as={Link} to="/create-item">Sell your products!</Button>{" "}
+            <Button as={Link} to="/search-items" className="btn2">Explore community products</Button>
           </div>
         </Col>
         <Col md="auto">
