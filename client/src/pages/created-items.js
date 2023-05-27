@@ -59,6 +59,7 @@ export const CreatedItems = () => {
 
   return (
     <Container fluid className="px-4 px-lg-5 bg-dark ">
+              <h1 className="page-title">My Items</h1>
       <div>
         {createdItems.length === 0 ? (
           <div>You don't have any items.</div>
