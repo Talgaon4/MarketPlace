@@ -10,10 +10,12 @@ import { UserModel } from "../models/Users.js";
 
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
-  const user = await UserModel.findOne({ username });
-  if (user) {
+  
+  const existingUser = await UserModel.findOne({ username });
+  if (existingUser) {
     return res.status(400).json({ message: "Username already exists" });
   }
+  
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new UserModel({ username, password: hashedPassword });
   await newUser.save();
@@ -30,14 +32,27 @@ router.post("/login", async (req, res) => {
       .status(400)
       .json({ message: "Username or password is incorrect" });
   }
+  
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     return res
       .status(400)
       .json({ message: "Username or password is incorrect" });
   }
+  
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   res.json({ token, userID: user._id });
+});
+
+router.get("/check-availability", async (req, res) => {
+  const { username } = req.query;
+  
+  const existingUser = await UserModel.findOne({ username });
+  if (existingUser) {
+    res.json({ available: false });
+  } else {
+    res.json({ available: true });
+  }
 });
 
 export { router as userRouter };

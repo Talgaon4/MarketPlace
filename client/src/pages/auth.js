@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import {
-  Form,
-  Button,
-  Alert,
-  Container,
-  Row,
-  Col,
-  Image,
-} from "react-bootstrap";
+import { Form, Button, Alert, Container, Row, Col, Image } from "react-bootstrap";
 import astronautImage from "../images/astronaut.png";
+
 export const Auth = () => {
   const [showRegister, setShowRegister] = useState(false);
 
@@ -36,6 +29,7 @@ const Login = ({ handleToggleForm }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -55,7 +49,7 @@ const Login = ({ handleToggleForm }) => {
   };
 
   return (
-    <Container fluid className=" create-item  bg-dark">
+    <Container fluid className="create-item bg-dark">
       <div>
         <h1 className="page-title">Login</h1>
       </div>
@@ -115,25 +109,49 @@ const Login = ({ handleToggleForm }) => {
 const Register = ({ handleToggleForm }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [_, setCookies] = useCookies(["access_token"]);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
+      // Check if the username is available
+      if (!username) {
+        setError("Username is required");
+        return;
+      }
+
+      const usernameAvailability = await axios.get(
+        `http://localhost:3001/auth/check-availability?username=${username}`
+      );
+
+      if (!usernameAvailability.data.available) {
+        setError("Username is not available");
+        return;
+      }
+
+      if (!password) {
+        setError("Password is required");
+        return;
+      }
+
       await axios.post("http://localhost:3001/auth/register", {
         username,
         password,
       });
-      alert("Registration Completed! Now login.");
+
+      setError(""); // Clear any previous error
+      setSuccessMessage("Registration completed! Please login.");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <Container fluid className=" create-item  bg-dark">
+    <Container fluid className="create-item bg-dark">
       <div>
         <h1 className="page-title">Register</h1>
       </div>
@@ -141,6 +159,10 @@ const Register = ({ handleToggleForm }) => {
         <Col className="pb-5">
           <Form onSubmit={handleSubmit}>
             <h2>Register</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {successMessage && (
+              <Alert variant="success">{successMessage}</Alert>
+            )}
             <Form.Group controlId="username">
               <Form.Label controlId="username">Username:</Form.Label>
               <Form.Control
@@ -169,7 +191,7 @@ const Register = ({ handleToggleForm }) => {
               type="button"
               onClick={handleToggleForm}
             >
-              Allready have an acount? Press here
+              Already have an account? Press here
             </Button>
           </div>
         </Col>
