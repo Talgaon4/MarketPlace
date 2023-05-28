@@ -58,6 +58,17 @@ export const CreateItem = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+    if (name === "phoneNumber") {
+      // Validate phone number: allow only numbers
+      const phoneNumberRegex = /^[0-9]+$/;
+      if (value !== "" && !phoneNumberRegex.test(value)) {
+        setError("Invalid phone number. Please enter only numbers.");
+      } else {
+        setError("");
+      }
+    }
+
     setItem((prevItem) => ({
       ...prevItem,
       [name]: value,
@@ -95,8 +106,9 @@ export const CreateItem = () => {
       }
     }
   };
+
   return (
-    <Container fluid className=" create-item  bg-dark">
+    <Container fluid className="create-item bg-dark">
       <div>
         <h1 className="page-title">Create Item</h1>
       </div>
@@ -180,7 +192,7 @@ export const CreateItem = () => {
             {error && <p>{error}</p>}
           </Form>
         </Col>
-        <Col  className="pb-5 d-flex justify-content-center" md="auto">
+        <Col className="pb-5 d-flex justify-content-center" md="auto">
           <div className="astro">
             <Image
               width={300}
