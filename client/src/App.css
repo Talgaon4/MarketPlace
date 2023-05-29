@@ -6,28 +6,13 @@
   background-color: #14162e;
   width: 100%;
 }
-.buttons-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
+
 .transparent-bg {
   background-color: transparent !important;
 }
-.buttons-container a {
-  margin-right: 10px;
-}
-.item-card-body {
-  flex-direction: column;
-}
 
 .icons-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.icons-container a {
-  margin-right: 10px;
+  display: inline-flex !important;
 }
 
 .icon-circle {
