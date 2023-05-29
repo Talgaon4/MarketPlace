@@ -15,6 +15,22 @@ export const MyNavbar = () => {
     navigate("/auth");
   };
 
+  const renderAuthenticatedLinks = () => {
+    return (
+      <>
+        <Nav.Link as={Link} to="/create-item">
+          Create Item
+        </Nav.Link>
+        <Nav.Link as={Link} to="/saved-items">
+          Saved Items
+        </Nav.Link>
+        <Nav.Link as={Link} to="/created-items">
+          My Items
+        </Nav.Link>
+      </>
+    );
+  };
+
   return (
     <div className="header-wrapper">
       <div className="background-image">
@@ -23,7 +39,7 @@ export const MyNavbar = () => {
             expand="lg"
             variant="dark"
             className="nav-style"
-            bg=" transparent "
+            bg="transparent"
           >
             <Container style={{ padding: 0 }}>
               <Navbar.Brand as={Link} to="/">
@@ -33,15 +49,9 @@ export const MyNavbar = () => {
                 <Nav.Link as={Link} to="/search-items">
                   Search Items
                 </Nav.Link>
-                <Nav.Link as={Link} to="/create-item">
-                  Create Item
-                </Nav.Link>
-                <Nav.Link as={Link} to="/saved-items">
-                  Saved Items
-                </Nav.Link>
-                <Nav.Link as={Link} to="/created-items">
-                  My Items
-                </Nav.Link>
+                {cookies.access_token && renderAuthenticatedLinks()}
+              </Nav>
+              <Nav>
                 {!cookies.access_token ? (
                   <Nav.Link as={Link} to="/auth">
                     Login/Register
@@ -52,7 +62,6 @@ export const MyNavbar = () => {
               </Nav>
             </Container>
           </Navbar>
-         
         </Container>
       </div>
     </div>
