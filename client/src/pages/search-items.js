@@ -10,11 +10,12 @@ export const SearchItems = () => {
   const [items, setItems] = useState([]);
   const [savedItems, setSavedItems] = useState([]);
   const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [priceRange, setPriceRange] = useState([1, 9999]); // Initial price range values
   const userID = useGetUserID();
 
   useEffect(() => {
-    const fetchItems = async (district, minPrice, maxPrice) => {
+    const fetchItems = async (district, minPrice, maxPrice, category) => {
       try {
         const response = await axios.get(
           "http://localhost:3001/items/itemsSearch",
@@ -23,6 +24,7 @@ export const SearchItems = () => {
               district: district,
               minPrice: minPrice,
               maxPrice: maxPrice,
+              category: category,
             },
           }
         );
@@ -44,9 +46,9 @@ export const SearchItems = () => {
     };
 
     const [minPrice, maxPrice] = priceRange; // Destructure the price range values
-    fetchItems(selectedDistrict, minPrice, maxPrice);
+    fetchItems(selectedDistrict, minPrice, maxPrice, selectedCategory);
     fetchSavedItems();
-  }, [userID, selectedDistrict, priceRange]);
+  }, [userID, selectedDistrict, priceRange, selectedCategory]);
 
   const saveItem = async (itemID) => {
     try {
@@ -78,6 +80,10 @@ export const SearchItems = () => {
     setSelectedDistrict(event.target.value);
   };
 
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
   const handlePriceRangeChange = (newRange) => {
     setPriceRange(newRange);
   };
@@ -101,6 +107,22 @@ export const SearchItems = () => {
           <option value="Central">Central</option>
         </select>
       </div>
+      <div className="d-flex align-items-start filter">
+  <label htmlFor="category">Filter by Category: &nbsp;</label>
+  <select
+    className="dropdown ml-3"
+    id="category"
+    value={selectedCategory}
+    onChange={handleCategoryChange}
+  >
+    <option value="">All</option>
+    <option value="Keyboards">Keyboards</option>
+    <option value="Monitors">Monitors</option>
+    <option value="Screens">Screens</option>
+    <option value="Consoles">Consoles</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
       <div className="filter p-3">
         <label htmlFor="priceRange">Price Range:</label>
         <Range

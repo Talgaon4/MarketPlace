@@ -11,6 +11,7 @@ router.get("/itemsSearch", async (req, res) => {
     const district = req.query.district;
     const minPrice = req.query.minPrice;
     const maxPrice = req.query.maxPrice;
+    const category = req.query.category; // New category parameter
 
     let query = {};
 
@@ -26,12 +27,17 @@ router.get("/itemsSearch", async (req, res) => {
       query.cost = { $lte: maxPrice };
     }
 
+    if (category) {
+      query.category = category;
+    }
+
     const result = await ItemsModel.find(query);
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 router.get("/", async (req, res) => {
   try {
     let query = {};
