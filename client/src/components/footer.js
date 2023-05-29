@@ -2,6 +2,7 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 import linkdinIcon from "../images/linkedin-black.png";
 import githubIcon from "../images/github-icon.png";
+import astro from "../images/astronaut-computer.png";
 export const Footer = () => {
   return (
     <footer className="footer text-center text-white">
@@ -26,10 +27,7 @@ export const Footer = () => {
               />
             </div>
           </a>
-          <a
-            className=" m-1"
-            href="https://github.com/Yovelgabay/MarketPlace"
-          >
+          <a className=" m-1" href="https://github.com/Yovelgabay/MarketPlace">
             <div className="icon-circle icon-3">
               <Image
                 width={28}
@@ -41,10 +39,16 @@ export const Footer = () => {
       </div>
 
       <div
-        className="text-center p-3"
+        className="text-center p-3 d-flex justify-content-center align-items-center"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         © {new Date().getFullYear()} Gaming Space
+        <Image
+          className="align-self-center mx-3"
+          width={50}
+          rounded
+          src={astro}
+        />
       </div>
     </footer>
   );

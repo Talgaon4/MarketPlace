@@ -169,7 +169,7 @@ const Register = ({ handleToggleForm }) => {
               type="button"
               onClick={handleToggleForm}
             >
-              Allready have an acount? Press here
+              Already have an account? Press here
             </Button>
           </div>
         </Col>
