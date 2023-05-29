@@ -11,8 +11,22 @@
   flex-direction: row;
   align-items: center;
 }
-
+.transparent-bg {
+  background-color: transparent !important;
+}
 .buttons-container a {
+  margin-right: 10px;
+}
+.item-card-body {
+  flex-direction: column;
+}
+
+.icons-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.icons-container a {
   margin-right: 10px;
 }
 

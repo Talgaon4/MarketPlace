@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Alert, Container, Row, Col, Image } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Alert,
+  Container,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
 import astronautImage from "../images/astronaut.png";
 
 export const Auth = () => {
@@ -53,11 +61,9 @@ const Login = ({ handleToggleForm }) => {
       <div>
         <h1 className="page-title">Login</h1>
       </div>
-
       <Row className="pb-5">
-        <Col className="pb-5">
+        <Col className="pb-5 d-flex flex-column align-items-center ">
           <Form className="align-self-center" onSubmit={handleSubmit}>
-            <h2>Login</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form.Group controlId="username">
               <Form.Label>Username:</Form.Label>
@@ -76,30 +82,20 @@ const Login = ({ handleToggleForm }) => {
               />
             </Form.Group>
             <div className="pt-2">
-              <Button variant="primary" type="submit">
+              <Button className="btn2" variant="primary" type="submit">
                 Login
+              </Button>
+            </div>{" "}
+            <div className="pt-3">
+              <Button
+                variant="outline-info"
+                type="button"
+                onClick={handleToggleForm}
+              >
+                Unregistered? Press here
               </Button>
             </div>
           </Form>
-
-          <div className="pt-2">
-            <Button
-              variant="outline-info"
-              type="button"
-              onClick={handleToggleForm}
-            >
-              Unregistered? Press here
-            </Button>
-          </div>
-        </Col>
-        <Col className="pb-5 d-flex justify-content-center" md="auto">
-          <div className="astro">
-            <Image
-              width={300}
-              rounded
-              src={astronautImage} // Use the imported image as the source
-            />
-          </div>
         </Col>
       </Row>
     </Container>
@@ -109,10 +105,9 @@ const Login = ({ handleToggleForm }) => {
 const Register = ({ handleToggleForm }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [_, setCookies] = useCookies(["access_token"]);
-  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -138,12 +133,17 @@ const Register = ({ handleToggleForm }) => {
         return;
       }
 
+      if (password !== passwordConfirmation) {
+        setError("Passwords do not match");
+        return;
+      }
+
       await axios.post("http://localhost:3001/auth/register", {
         username,
         password,
       });
 
-      setError(""); // Clear any previous error
+      setError("");
       setSuccessMessage("Registration completed! Please login.");
     } catch (error) {
       console.error(error);
@@ -155,10 +155,9 @@ const Register = ({ handleToggleForm }) => {
       <div>
         <h1 className="page-title">Register</h1>
       </div>
-      <Row className="pb-5">
-        <Col className="pb-5">
+      <Row className="pb-5  ">
+        <Col className="pb-5 d-flex flex-column align-items-center ">
           <Form onSubmit={handleSubmit}>
-            <h2>Register</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             {successMessage && (
               <Alert variant="success">{successMessage}</Alert>
@@ -179,30 +178,33 @@ const Register = ({ handleToggleForm }) => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Form.Group>
-            <div className="pt-2">
-              <Button variant="primary" type="submit">
+            <Form.Group controlId="passwordConfirmation">
+              <Form.Label controlId="passwordConfirmation">
+                Confirm Password:
+              </Form.Label>
+              <Form.Control
+                type="password"
+                value={passwordConfirmation}
+                onChange={(event) =>
+                  setPasswordConfirmation(event.target.value)
+                }
+              />
+            </Form.Group>
+            <div className="pt-2 ">
+              <Button variant="primary" type="submit" className="btn2">
                 Register
+              </Button>
+            </div>{" "}
+            <div className="pt-3">
+              <Button
+                variant="outline-warning"
+                type="button"
+                onClick={handleToggleForm}
+              >
+                Already have an account? Press here
               </Button>
             </div>
           </Form>
-          <div className="pt-2">
-            <Button
-              variant="outline-warning"
-              type="button"
-              onClick={handleToggleForm}
-            >
-              Already have an account? Press here
-            </Button>
-          </div>
-        </Col>
-        <Col className="pb-5 d-flex justify-content-center" md="auto">
-          <div className="astro">
-            <Image
-              width={300}
-              rounded
-              src={astronautImage} // Use the imported image as the source
-            />
-          </div>
         </Col>
       </Row>
     </Container>

@@ -147,9 +147,9 @@ export const SearchItems = () => {
       </div>
       <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
         {items.map((item) => (
-          <div className="col-mb-5 my-4" key={item._id}>
+          <div className="col-mb-5 my-4 d-flex" key={item._id}>
             <Item
-              className=""
+              className="flex-grow-1"
               item={item}
               saveItem={saveItem}
               isItemSaved={() => isItemSaved(item._id)}

@@ -5,6 +5,7 @@ import saveIcon from "../images/save-icon.png";
 import savedIcon from "../images/saved-icon.png";
 import ListGroup from "react-bootstrap/ListGroup";
 import Popup from "./popup";
+import moreDetails from "../images/more-details.png";
 
 const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
   const [showModal, setShowModal] = useState(false);
@@ -28,38 +29,42 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
       day: "numeric",
     });
   }
-
   return (
-    <Card style={{ width: "16rem" }} className="items">
+    <Card
+      style={{ width: "16rem", backgroundColor: "rgba(255, 255, 255, 0.5)" }}
+      className="items"
+    >
       <Image
         className="align-self-center pt-3"
-        width={100}
-        height={130}
+        style={{ width: "100%", maxWidth: "200px" }}
         rounded
         src={item.imageUrl}
         alt={item.name}
       />
       <Card.Body>
         <Card.Title>{item.name}</Card.Title>
-        <Card.Text>{item.details}</Card.Text>
       </Card.Body>
 
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>Area: {item.district}</ListGroup.Item>
-        <ListGroup.Item>Price: {item.cost} ILS</ListGroup.Item>
+        <ListGroup.Item className="transparent-bg">
+          Area: {item.district}
+        </ListGroup.Item>
+        <ListGroup.Item className="transparent-bg">
+          Price: {item.cost} ILS
+        </ListGroup.Item>
       </ListGroup>
-      <Card.Body className="instructions d-flex justify-content-between align-items-center">
-        <div className="buttons-container">
+      <Card.Body className="instructions d-flex justify-content-between align-items-center ">
+        <div>
           <a onClick={handleSaveItem} className="align-self-start">
             {isItemSaved() ? (
-              <Image width={50} rounded src={savedIcon} alt="unsave" />
+              <Image width={30} rounded src={savedIcon} alt="unsave" />
             ) : (
-              <Image width={50} rounded src={saveIcon} alt="save" />
+              <Image width={30} rounded src={saveIcon} alt="save" />
             )}
           </a>{" "}
-          <Button className="btn" onClick={() => setShowModal(true)}>
-            More details
-          </Button>
+          <a onClick={() => setShowModal(true)}>
+            <Image width={30} src={moreDetails} alt="more details" />
+          </a>
         </div>
       </Card.Body>
 
@@ -72,8 +77,7 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
               <h4>Item Name: {item.name}</h4>
               <Image
                 className="align-self-center pt-3"
-                width={171}
-                height={180}
+                style={{ width: "100%", maxWidth: "200px" }}
                 rounded
                 src={item.imageUrl}
                 alt={item.name}
