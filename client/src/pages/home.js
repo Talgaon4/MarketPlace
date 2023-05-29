@@ -19,7 +19,7 @@ export const Home = () => {
             Save your favorite items, and even unleash your creativity by
             selling <span>your own gaming treasures</span>.
             <br />
-            MarketHub is your go-to <span>Gaming Marketplace!</span>
+            Gaming Space is your go-to <span>Gaming Marketplace!</span>
             <br />
             Get ready to level up your gaming experience with{" "}
             <span>Gaming Space</span>, where the world of gaming awaits you!
