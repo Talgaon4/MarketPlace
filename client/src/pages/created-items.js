@@ -84,34 +84,32 @@ export const CreatedItems = () => {
         ) : (
           <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 ">
             {createdItems.map((item) => (
-              <div className="col-mb-5 my-4" key={item._id}>
+              <div className="col-mb-5 my-4 d-flex" key={item._id}>
                 <Item
+                  className="flex-grow-1"
                   item={item}
                   isItemSaved={() => true}
                   cancelSaveItem={() => {}}
                 >
                   <Card.Body className="instructions d-flex justify-content-between align-items-center">
                     <div className="buttons-container">
-                      <a
-                        className="my-1"
-                        variant="outline-info"
-                        onClick={() => handleDeleteItem(item._id)}
-                      >
-                        <Image
-                          width={30}
-                          rounded
-                          src={deleteIcon}
-                          alt="delete"
-                        />
-                      </a>
-                      {error && <Alert variant="danger">{error}</Alert>}
-                      <a
-                        className="my-1"
-                        variant="outline-info"
-                        onClick={() => handleEditItem(item._id)}
-                      >
-                        <Image width={30} rounded src={editIcon} alt="edit" />
-                      </a>
+                      <div className="icons-container">
+                        <a
+                          className="my-1"
+                          variant="outline-info"
+                          onClick={() => handleDeleteItem(item._id)}
+                        >
+                          <Image width={30} src={deleteIcon} alt="delete" />
+                        </a>
+                        {error && <Alert variant="danger">{error}</Alert>}
+                        <a
+                          className="my-1"
+                          variant="outline-info"
+                          onClick={() => handleEditItem(item._id)}
+                        >
+                          <Image width={30} src={editIcon} alt="edit" />
+                        </a>
+                      </div>
                     </div>
                   </Card.Body>
                 </Item>

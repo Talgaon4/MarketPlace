@@ -17,6 +17,18 @@
 .buttons-container a {
   margin-right: 10px;
 }
+.item-card-body {
+  flex-direction: column;
+}
+
+.icons-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.icons-container a {
+  margin-right: 10px;
+}
 
 .icon-circle {
   display: flex;

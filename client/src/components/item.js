@@ -53,8 +53,8 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
           Price: {item.cost} ILS
         </ListGroup.Item>
       </ListGroup>
-      <Card.Body className="instructions d-flex justify-content-between align-items-center">
-        <div className="buttons-container">
+      <Card.Body className="instructions d-flex justify-content-between align-items-center ">
+        <div>
           <a onClick={handleSaveItem} className="align-self-start">
             {isItemSaved() ? (
               <Image width={30} rounded src={savedIcon} alt="unsave" />
@@ -63,7 +63,7 @@ const Item = ({ item, saveItem, isItemSaved, cancelSaveItem, children }) => {
             )}
           </a>{" "}
           <a onClick={() => setShowModal(true)}>
-            <Image width={30}  src={moreDetails} alt="more details" />
+            <Image width={30} src={moreDetails} alt="more details" />
           </a>
         </div>
       </Card.Body>
