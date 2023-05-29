@@ -19,6 +19,10 @@ const itemSchema = new Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   phoneNumber: {
     type: String,
     required: true,

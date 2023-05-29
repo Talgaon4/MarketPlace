@@ -18,6 +18,7 @@ export const CreateItem = () => {
     imageUrl: "",
     district: "",
     phoneNumber: "",
+    category: "", // New category state
     userOwner: userID,
   });
   const [error, setError] = useState("");
@@ -29,7 +30,8 @@ export const CreateItem = () => {
       item.cost <= 0 ||
       item.imageUrl.trim() === "" ||
       item.district.trim() === "" ||
-      item.phoneNumber.trim() === ""
+      item.phoneNumber.trim() === "" ||
+      item.category.trim() === ""
     ) {
       setError("Please fill in all fields.");
       return false;
@@ -40,10 +42,8 @@ export const CreateItem = () => {
 
   useEffect(() => {
     if (location.state && location.state.item) {
-      // If an item prop is present in the location state, update the item state
       setItem(location.state.item);
     } else {
-      // It's a new item, initialize the item state
       setItem({
         name: "",
         details: "",
@@ -51,6 +51,7 @@ export const CreateItem = () => {
         imageUrl: "",
         district: "",
         phoneNumber: "",
+        category: "",
         userOwner: userID,
       });
     }
@@ -60,7 +61,6 @@ export const CreateItem = () => {
     const { name, value } = event.target;
 
     if (name === "phoneNumber") {
-      // Validate phone number: allow only numbers
       const phoneNumberRegex = /^[0-9]+$/;
       if (value !== "" && !phoneNumberRegex.test(value)) {
         setError("Invalid phone number. Please enter only numbers.");
@@ -80,7 +80,6 @@ export const CreateItem = () => {
     if (validateForm()) {
       try {
         if (item._id) {
-          // If item has an ID, it is an existing item, so perform an update
           await axios.put(
             `http://localhost:3001/items/${item._id}`,
             { ...item },
@@ -90,7 +89,6 @@ export const CreateItem = () => {
           );
           alert("Item Updated");
         } else {
-          // Otherwise, it is a new item, so perform a create
           await axios.post(
             "http://localhost:3001/items",
             { ...item },
@@ -121,7 +119,7 @@ export const CreateItem = () => {
               <Form.Control
                 type="text"
                 name="name"
-                placeholder="name"
+                placeholder="Name"
                 value={item.name}
                 onChange={handleChange}
               />
@@ -184,6 +182,23 @@ export const CreateItem = () => {
               />
             </Form.Group>
 
+            <Form.Group controlId="category">
+              <Form.Label>Category</Form.Label>
+              <Form.Select
+                as="select"
+                name="category"
+                value={item.category}
+                onChange={handleChange}
+              >
+                <option value="">Select Category</option>
+                <option value="Keyboards">Keyboards</option>
+                <option value="Monitors">Monitors</option>
+                <option value="Screens">Screens</option>
+                <option value="Consoles">Consoles</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+            </Form.Group>
+
             <div className="pt-3 d-grid gap-2">
               <Button variant="outline-info" type="submit">
                 {item._id ? "Edit Item" : "Create Item"}
@@ -197,7 +212,7 @@ export const CreateItem = () => {
             <Image
               width={300}
               rounded
-              src={astronautImage} // Use the imported image as the source
+              src={astronautImage}
             />
           </div>
         </Col>
