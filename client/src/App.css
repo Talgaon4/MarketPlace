@@ -2,18 +2,63 @@
   background-color: #14162e;
   width: 100%;
 }
+.footer {
+  background-color: #14162e;
+  width: 100%;
+}
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.buttons-container a {
+  margin-right: 10px;
+}
+
+.icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+}
+
+.icon-circle:hover {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  z-index: 2;
+  cursor: pointer;
+}
+a {
+  cursor: pointer;
+}
+.icon-2 {
+  background-color: #01b89a;
+}
+.icon-3 {
+  background-color: #fff;
+}
+.icon-1 {
+  background-color: #6f2dff;
+}
 
 .items {
   font-family: "Dosis", sans-serif;
 }
+
 .btn {
   background-color: #01e4bf !important;
   color: #fff !important;
   border: none !important;
 }
 
+.modal {
+  font-family: "Dosis", sans-serif;
+}
 .bg-dark {
-  background-image: url("images/bg-dark.png");
+  background-image: url("images/bg-stars.png");
   background-repeat: repeat-y;
   background-position: top;
   background-size: cover 100%;
@@ -112,7 +157,8 @@
   color: #01b89a !important;
 }
 
-Button:hover {
+Button:hover,
+.btn-home:hover {
   background-color: rgba(0, 0, 0, 0.5) !important;
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { MyNavbar } from "./components/navbar";
+import { Footer } from "./components/footer";
 import { Auth } from "./pages/auth";
 import { CreateItem } from "./pages/create-item";
 import { Home } from "./pages/home";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/created-items" element={<CreatedItems />} />
           <Route path="/create-item/:id" element={<CreateItem />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

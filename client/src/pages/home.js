@@ -25,8 +25,8 @@ export const Home = () => {
             <span>Gaming Space</span>, where the world of gaming awaits you!
           </p>
           <div>
-            <Button as={Link} to="/create-item">Sell your products!</Button>{" "}
-            <Button as={Link} to="/search-items" className="btn2">Explore community products</Button>
+            <Button className="btn-home" as={Link} to="/create-item">Sell your products!</Button>{" "}
+            <Button as={Link} to="/search-items" className="btn2 btn-home">Explore community products</Button>
           </div>
         </Col>
         <Col md="auto">

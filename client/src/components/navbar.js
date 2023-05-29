@@ -8,27 +8,12 @@ import Navbar from "react-bootstrap/Navbar";
 export const MyNavbar = () => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const logout = () => {
     setCookies("access_token", "");
     window.localStorage.clear();
     navigate("/auth");
   };
-
-  const titleMap = {
-    "/create-item": "Create Item",
-    "/saved-items": "Saved Items",
-    "/created-items": "My Items",
-    "/search-items": "Search Items",
-    "/auth": "Login/Register",
-  };
-
-  // Get the current path
-  const currentPath = location.pathname;
-
-  // Get the corresponding title for the current path
-  const title = titleMap[currentPath] || "";
 
   return (
     <div className="header-wrapper">
