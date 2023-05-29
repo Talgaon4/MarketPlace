@@ -92,7 +92,7 @@ export const CreateItem = () => {
         } else {
           // Otherwise, it is a new item, so perform a create
           await axios.post(
-            "http://localhost:3001/items",
+            "http://localhost:3001/items/createItem",
             { ...item },
             {
               headers: { authorization: cookies.access_token },

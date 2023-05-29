@@ -16,13 +16,16 @@ export const SearchItems = () => {
   useEffect(() => {
     const fetchItems = async (district, minPrice, maxPrice) => {
       try {
-        const response = await axios.get("http://localhost:3001/items", {
-          params: {
-            district: district,
-            minPrice: minPrice,
-            maxPrice: maxPrice,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:3001/items/itemsSearch",
+          {
+            params: {
+              district: district,
+              minPrice: minPrice,
+              maxPrice: maxPrice,
+            },
+          }
+        );
         setItems(response.data);
       } catch (err) {
         console.log(err);
@@ -32,7 +35,7 @@ export const SearchItems = () => {
     const fetchSavedItems = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/items/savedItems/ids/${userID}`
+          `http://localhost:3001/items/savedItems/${userID}`
         );
         setSavedItems(response.data.savedItems);
       } catch (err) {
@@ -47,7 +50,7 @@ export const SearchItems = () => {
 
   const saveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://localhost:3001/items", {
+      const response = await axios.put("http://localhost:3001/items/saveItem", {
         itemID,
         userID,
       });
@@ -61,7 +64,7 @@ export const SearchItems = () => {
 
   const cancelSaveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://localhost:3001/items", {
+      const response = await axios.put("http://localhost:3001/items/saveItem", {
         itemID,
         userID,
       });
@@ -105,7 +108,6 @@ export const SearchItems = () => {
           step={10}
           min={1}
           max={9999}
-
           values={priceRange}
           onChange={handlePriceRangeChange}
           renderTrack={({ props, children }) => (
