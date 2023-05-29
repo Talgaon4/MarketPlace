@@ -114,8 +114,8 @@ export const CreateItem = () => {
       </div>
 
       <Row className="pb-5">
-        <Col className="pb-5 d-flex justify-content-center">
-          <Form onSubmit={handleSubmit}>
+        <Col className="pb-5 d-flex align-items-center  justify-content-center ">
+          <Form onSubmit={handleSubmit} className="align-items-center">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control

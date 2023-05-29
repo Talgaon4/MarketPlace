@@ -50,7 +50,7 @@ export const SavedItems = () => {
   }
 
   return (
-    <Container fluid className="px-4 px-lg-5 bg-dark ">
+    <Container fluid className="px-4 px-lg-5 bg-dark">
       <div>
         <h1 className="page-title">Items</h1>
       </div>
