@@ -90,7 +90,7 @@ export const CreateItem = () => {
           alert("Item Updated");
         } else {
           await axios.post(
-            "http://localhost:3001/items",
+            "http://localhost:3001/items/createItem",
             { ...item },
             {
               headers: { authorization: cookies.access_token },

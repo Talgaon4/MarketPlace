@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/useGetUserID";
-import Image from "react-bootstrap/Image";
 import axios from "axios";
 import Item from "../components/item";
-import { Alert, Button, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import deleteIcon from "../images/delete-icon.png";
-import editIcon from "../images/edit.png";
+import { useNavigate } from "react-router-dom";
 
 export const CreatedItems = () => {
   const [createdItems, setCreatedItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [savedItems, setSavedItems] = useState([]);
   const [deleteMessage, setDeleteMessage] = useState("");
   const [error, setError] = useState("");
   const userID = useGetUserID();
@@ -21,7 +19,6 @@ export const CreatedItems = () => {
     const fetchCreatedItems = async () => {
       try {
         let url = `http://localhost:3001/items/createdItems/${userID}`;
-
         // Check if the user is an admin
         let isAdmin = false;
         try {
@@ -49,14 +46,48 @@ export const CreatedItems = () => {
         setLoading(false);
       }
     };
-
+    const fetchSavedItems = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/items/savedItems/${userID}`
+        );
+        setSavedItems(response.data.savedItems);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchSavedItems();
     fetchCreatedItems();
   }, [userID]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
+  const saveItem = async (itemID) => {
+    try {
+      const response = await axios.put("http://localhost:3001/items/saveItem", {
+        itemID,
+        userID,
+      });
+      setSavedItems(response.data.savedItems);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  const isItemSaved = (id) => savedItems && savedItems.includes(id);
+
+  const cancelSaveItem = async (itemID) => {
+    try {
+      const response = await axios.put("http://localhost:3001/items/saveItem", {
+        itemID,
+        userID,
+      });
+      setSavedItems(response.data.savedItems);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleDeleteItem = async (itemId) => {
     try {
       await axios.delete(`http://localhost:3001/items/${itemId}`);
@@ -75,6 +106,11 @@ export const CreatedItems = () => {
     }
   };
 
+  const isCreatedByCurrentUser = (itemId) => {
+    const createdItem = createdItems.find((item) => item._id === itemId);
+    return createdItem && createdItem.createdBy === userID;
+  };
+
   return (
     <Container fluid className="px-4 px-lg-5 bg-dark">
       <h1 className="page-title">My Items</h1>
@@ -88,31 +124,13 @@ export const CreatedItems = () => {
                 <Item
                   className="flex-grow-1"
                   item={item}
-                  isItemSaved={() => true}
-                  cancelSaveItem={() => {}}
-                >
-                  <Card.Body className="instructions d-flex justify-content-between align-items-center">
-                    <div className="buttons-container">
-                      <div className="icons-container">
-                        <a
-                          className="my-1"
-                          variant="outline-info"
-                          onClick={() => handleDeleteItem(item._id)}
-                        >
-                          <Image width={30} src={deleteIcon} alt="delete" />
-                        </a>
-                        {error && <Alert variant="danger">{error}</Alert>}
-                        <a
-                          className="my-1"
-                          variant="outline-info"
-                          onClick={() => handleEditItem(item._id)}
-                        >
-                          <Image width={30} src={editIcon} alt="edit" />
-                        </a>
-                      </div>
-                    </div>
-                  </Card.Body>
-                </Item>
+                  saveItem={saveItem}
+                  isItemSaved={() => isItemSaved(item._id)}
+                  cancelSaveItem={cancelSaveItem}
+                  isCreatedByCurrentUser={isCreatedByCurrentUser}
+                  handleDeleteItem={handleDeleteItem}
+                  handleEditItem={handleEditItem}
+                />
               </div>
             ))}
             {deleteMessage && <div>{deleteMessage}</div>}

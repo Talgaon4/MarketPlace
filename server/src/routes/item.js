@@ -6,7 +6,7 @@ import { verifyToken } from "./user.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/itemsSearch", async (req, res) => {
   try {
     const district = req.query.district;
     const minPrice = req.query.minPrice;
@@ -32,9 +32,19 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.get("/", async (req, res) => {
+  try {
+    let query = {};
+
+    const result = await ItemsModel.find(query);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Create a new item
-router.post("/", verifyToken, async (req, res) => {
+router.post("/createItem", verifyToken, async (req, res) => {
   const item = new ItemsModel({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
@@ -85,7 +95,7 @@ router.get("/:itemId", async (req, res) => {
 });
 
 // Save an item
-router.put("/", async (req, res) => {
+router.put("/saveItem", async (req, res) => {
   const itemID = req.body.itemID;
   const userID = req.body.userID;
 
@@ -119,7 +129,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Get the IDs of saved items
-router.get("/savedItems/ids/:userId", async (req, res) => {
+router.get("/savedItems/:userId", async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userId);
     res.status(200).json({ savedItems: user?.savedItems });
@@ -129,20 +139,6 @@ router.get("/savedItems/ids/:userId", async (req, res) => {
   }
 });
 
-// Get saved items
-router.get("/savedItems/:userId", async (req, res) => {
-  try {
-    const user = await UserModel.findById(req.params.userId);
-    const savedItems = await ItemsModel.find({
-      _id: { $in: user.savedItems },
-    });
-
-    res.status(200).json({ savedItems });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
 
 // Get created items by user ID
 router.get("/createdItems/:userId", async (req, res) => {
@@ -166,7 +162,10 @@ router.get("/createdItems/:userId", async (req, res) => {
   }
 });
 
-router.delete("/users/:userId/:itemId", async (req, res) => {
+router.delete("/cancelSave", async (req, res) => {
+  console.log(req.params.userId, req.params.itemId);
+  res.json({ user: req.params.userId });
+
   const userId = req.params.userId;
   const itemId = req.params.itemId;
 
