@@ -7,8 +7,8 @@ export const Home = () => {
   return (
     <Container fluid className="header-home pt-3 pb-5 px-3">
       <Row className="pb-5">
-        <Col>
-          <h1 className="pb-5">
+        <Col xs={12} sm={10}>
+          <h1 className="pb-2 pb-ml-5">
             Welcome to
             <br />
             <span className="glow">Gaming Space</span>
@@ -25,14 +25,18 @@ export const Home = () => {
             <span>Gaming Space</span>, where the world of gaming awaits you!
           </p>
           <div>
-            <Button className="btn-home" as={Link} to="/create-item">Sell your products!</Button>{" "}
-            <Button as={Link} to="/search-items" className="btn2 btn-home">Explore community products</Button>
+            <Button className="btn-home" as={Link} to="/create-item">
+              Sell your products!
+            </Button>{" "}
+            <Button as={Link} to="/search-items" className="btn2 btn-home">
+              Explore community products
+            </Button>
           </div>
         </Col>
-        <Col md="auto">
+        <Col sm={2}>
           <div className="astro">
             <Image
-              rounded
+              className="astro-img align-self-center"
               src={astronautImage} // Use the imported image as the source
             />
           </div>

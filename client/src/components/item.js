@@ -45,30 +45,31 @@ const Item = ({
       style={{ width: "16rem", backgroundColor: "rgba(255, 255, 255, 0.5)" }}
       className="items"
     >
-      <Image
+      <Card.Img
         className="align-self-center pt-3"
-        style={{ width: "100%", maxWidth: "200px" }}
+        style={{ width: "100%", maxWidth: "200px", margin: "0 auto" }}
         rounded
         src={item.imageUrl}
         alt={item.name}
       />
-      <Card.Body>
+
+      <Card.Body className="d-flex flex-column  flex-grow-1">
         <Card.Title>{item.name}</Card.Title>
       </Card.Body>
 
-      <ListGroup className="list-group-flush">
+      <ListGroup className="list-group-flush ">
         <ListGroup.Item className="transparent-bg">
           Area: {item.district}
         </ListGroup.Item>
-        <ListGroup.Item className="transparent-bg">
+        <ListGroup.Item className="transparent-bg  ">
           Price: {item.cost} ILS
         </ListGroup.Item>
       </ListGroup>
-      <Card.Body className="instructions align-bottom">
+      <Card.Body className="instructions d-flex align-items-end ">
         {isCreatedByCurrentUser && (
           <>
             <a
-              className="my-1"
+              className="my-1 "
               variant="outline-info"
               onClick={() => handleDeleteItem(item._id)}
             >
@@ -83,7 +84,7 @@ const Item = ({
             </a>
           </>
         )}
-        <a onClick={handleSaveItem} className="align-self-start my-1">
+        <a onClick={handleSaveItem} className=" my-1">
           {isItemSaved() ? (
             <Image width={30} src={savedIcon} alt="unsave" />
           ) : (

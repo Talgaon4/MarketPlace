@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
 import Item from "../components/item";
-
-import Container from "react-bootstrap/Container";
+import { Col, Row, Container, Spinner } from "react-bootstrap";
 
 export const SavedItems = () => {
+  const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [savedItems, setSavedItems] = useState([]);
   const userID = useGetUserID();
@@ -15,8 +15,10 @@ export const SavedItems = () => {
       try {
         const response = await axios.get("http://localhost:3001/items");
         setItems(response.data);
+        setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
 
@@ -35,6 +37,21 @@ export const SavedItems = () => {
     fetchSavedItems();
   }, [userID]);
 
+  if (loading) {
+    return (
+      <div
+        className="bg-dark"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spinner animation="border" variant="info" />
+      </div>
+    );
+  }
   const saveItem = async (itemID) => {
     try {
       const response = await axios.put("http://localhost:3001/items/saveItem", {
@@ -68,19 +85,24 @@ export const SavedItems = () => {
         <h1 className="page-title">Items</h1>
       </div>
 
-      <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
-        {filteredItems.map((item) => (
-          <div className="col-mb-5 my-4 d-flex" key={item._id}>
-            <Item
-              className="flex-grow-1"
-              item={item}
-              saveItem={saveItem}
-              isItemSaved={() => isItemSaved(item._id)}
-              cancelSaveItem={cancelSaveItem}
-            />
-          </div>
-        ))}
-      </div>
+      <Container>
+        <Row xs={1} md={2} lg={3} xl={4} className="g-4">
+          {filteredItems.map((item) => (
+            <Col
+              className="col-mb-5 my-4 d-flex  justify-content-center"
+              key={item._id}
+            >
+              <Item
+                className="flex-grow-1"
+                item={item}
+                saveItem={saveItem}
+                isItemSaved={() => isItemSaved(item._id)}
+                cancelSaveItem={cancelSaveItem}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </Container>
   );
 };

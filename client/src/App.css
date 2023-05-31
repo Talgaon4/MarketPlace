@@ -70,8 +70,18 @@ a {
   color: #01e4bf;
   font-family: "Bungee Inline", cursive;
   font-weight: 500;
-  font-size: 6rem;
+  font-size: 6vw;
   text-align: center;
+}
+
+.astro-form {
+  position: absolute;
+  top: 30%;
+  right: 7rem;
+}
+.astro-img {
+  margin: 0 auto;
+  width: 12vw;
 }
 
 .header-home {
@@ -86,14 +96,14 @@ a {
 
 .header-home h1 {
   font-family: "Bungee Inline", cursive;
-  font-size: 3rem;
-  line-height: 6rem;
+  font-size: 3.5vw;
+  line-height: 6vw;
   font-weight: 500;
 }
 .header-home h1 > span {
   color: #01b89a;
-  font-size: 5.5rem;
-  line-height: 7rem;
+  font-size: 6vw;
+  line-height: 7vw;
 }
 .glow {
   -webkit-animation: glow 1s ease-in-out infinite alternate;
@@ -114,14 +124,15 @@ a {
 .header-home p {
   font-family: "Dosis", sans-serif;
   color: #fff;
-  font-size: 1.4rem;
+  font-size: 1.6vw;
   line-height: 180%;
 }
 .header-home p > span {
   color: #01e4bf;
   font-weight: 600;
 }
-.astro {
+.astro,
+.astro-form {
   aspect-ratio: 1 / 1;
   animation: 4s linear 0s infinite alternate rise;
 }
@@ -139,14 +150,9 @@ a {
   font-family: "Dosis", sans-serif;
   color: #fff;
   font-size: 1.2rem;
-  width: 20%;
   line-height: 1.3rem;
 }
-.dropdown {
-  color: #00243f;
-  background-color: #fff;
-  font-size: 1rem;
-}
+
 .header-home Button {
   font-size: 1.3rem;
   margin: 2px;
@@ -171,4 +177,31 @@ body {
 .create-item Form {
   color: #fff;
   width: 300px;
+}
+
+@media (max-width: 992px) {
+  .page-title {
+    font-size: 50px !important;
+  }
+  .astro-form {
+    display: none;
+  }
+  .header-home h1 {
+    font-size: 36px;
+    line-height: 45px;
+  }
+  .header-home h1 > span {
+    font-size: 60px;
+    line-height: 70px;
+  }
+  .header-home p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .astro,
+  .astro-img {
+    display: none;
+  }
 }
