@@ -112,8 +112,8 @@ export const CreateItem = () => {
       </div>
 
       <Row className="pb-5">
-        <Col className="pb-5 d-flex align-items-center  justify-content-center ">
-          <Form onSubmit={handleSubmit} className="align-items-center">
+        <Col xs={12} sm={12} md={12} lg={12} className="justify-content-center">
+          <Form onSubmit={handleSubmit} className="mx-auto">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -206,14 +206,9 @@ export const CreateItem = () => {
             </div>
             {error && <p>{error}</p>}
           </Form>
-        </Col>
-        <Col className="pb-5 d-flex justify-content-center" md="auto">
-          <div className="astro">
-            <Image
-              width={300}
-              rounded
-              src={astronautImage}
-            />
+
+          <div className="astro-form">
+            <Image width={160} src={astronautImage} />
           </div>
         </Col>
       </Row>
