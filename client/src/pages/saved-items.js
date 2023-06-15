@@ -13,7 +13,7 @@ export const SavedItems = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get("http://gaming-space.vercel.app/items");
+        const response = await axios.get("https://gaming-space.vercel.app/items");
         setItems(response.data);
         setLoading(false);
       } catch (err) {
@@ -25,7 +25,7 @@ export const SavedItems = () => {
     const fetchSavedItems = async () => {
       try {
         const response = await axios.get(
-          `http://gaming-space.vercel.app/items/savedItems/${userID}`
+          `https://gaming-space.vercel.app/items/savedItems/${userID}`
         );
         setSavedItems(response.data.savedItems);
       } catch (err) {
@@ -54,7 +54,7 @@ export const SavedItems = () => {
   }
   const saveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://gaming-space.vercel.app/items/saveItem", {
+      const response = await axios.put("https://gaming-space.vercel.app/items/saveItem", {
         itemID,
         userID,
       });
@@ -68,7 +68,7 @@ export const SavedItems = () => {
 
   const cancelSaveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://gaming-space.vercel.app/items/saveItem", {
+      const response = await axios.put("https://gaming-space.vercel.app/items/saveItem", {
         itemID,
         userID,
       });
