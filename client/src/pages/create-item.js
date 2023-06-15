@@ -81,7 +81,7 @@ export const CreateItem = () => {
       try {
         if (item._id) {
           await axios.put(
-            `http://localhost:3001/items/${item._id}`,
+            `http://gaming-space.vercel.app/items/${item._id}`,
             { ...item },
             {
               headers: { authorization: cookies.access_token },
@@ -90,7 +90,7 @@ export const CreateItem = () => {
           alert("Item Updated");
         } else {
           await axios.post(
-            "http://localhost:3001/items/createItem",
+            "http://gaming-space.vercel.app/items/createItem",
             { ...item },
             {
               headers: { authorization: cookies.access_token },

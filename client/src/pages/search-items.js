@@ -137,7 +137,7 @@ export const SearchItems = () => {
     const fetchItems = async (district, minPrice, maxPrice, category) => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/items/itemsSearch",
+          "http://gaming-space.vercel.app/items/itemsSearch",
           {
             params: {
               district: district,
@@ -156,7 +156,7 @@ export const SearchItems = () => {
     const fetchSavedItems = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/items/savedItems/${userID}`
+          `http://gaming-space.vercel.app/items/savedItems/${userID}`
         );
         setSavedItems(response.data.savedItems);
         setLoading(false);
@@ -187,7 +187,7 @@ if (loading) {
   }
   const saveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://localhost:3001/items/saveItem", {
+      const response = await axios.put("http://gaming-space.vercel.app/items/saveItem", {
         itemID,
         userID,
       });
@@ -201,7 +201,7 @@ if (loading) {
 
   const cancelSaveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://localhost:3001/items/saveItem", {
+      const response = await axios.put("http://gaming-space.vercel.app/items/saveItem", {
         itemID,
         userID,
       });

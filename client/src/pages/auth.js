@@ -42,7 +42,7 @@ const Login = ({ handleToggleForm }) => {
     event.preventDefault();
 
     try {
-      const result = await axios.post("http://localhost:3001/auth/login", {
+      const result = await axios.post("http://gaming-space.vercel.app/auth/login", {
         username,
         password,
       });
@@ -120,7 +120,7 @@ const Register = ({ handleToggleForm }) => {
       }
 
       const usernameAvailability = await axios.get(
-        `http://localhost:3001/auth/check-availability?username=${username}`
+        `http://gaming-space.vercel.app/auth/check-availability?username=${username}`
       );
 
       if (!usernameAvailability.data.available) {
@@ -138,7 +138,7 @@ const Register = ({ handleToggleForm }) => {
         return;
       }
 
-      await axios.post("http://localhost:3001/auth/register", {
+      await axios.post("http://gaming-space.vercel.app/auth/register", {
         username,
         password,
       });

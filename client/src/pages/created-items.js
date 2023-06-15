@@ -17,12 +17,12 @@ export const CreatedItems = () => {
   useEffect(() => {
     const fetchCreatedItems = async () => {
       try {
-        let url = `http://localhost:3001/items/createdItems/${userID}`;
+        let url = `http://gaming-space.vercel.app/items/createdItems/${userID}`;
         // Check if the user is an admin
         let isAdmin = false;
         try {
           const response = await axios.get(
-            `http://localhost:3001/users/${userID}`
+            `http://gaming-space.vercel.app/users/${userID}`
           );
           isAdmin = response.data?.isAdmin || false;
         } catch (err) {
@@ -30,7 +30,7 @@ export const CreatedItems = () => {
         }
 
         if (isAdmin) {
-          url = `http://localhost:3001/items`;
+          url = `http://gaming-space.vercel.app/items`;
         }
 
         const responseItems = await axios.get(url);
@@ -48,7 +48,7 @@ export const CreatedItems = () => {
     const fetchSavedItems = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/items/savedItems/${userID}`
+          `http://gaming-space.vercel.app/items/savedItems/${userID}`
         );
         setSavedItems(response.data.savedItems);
       } catch (err) {
@@ -77,7 +77,7 @@ export const CreatedItems = () => {
 
   const saveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://localhost:3001/items/saveItem", {
+      const response = await axios.put("http://gaming-space.vercel.app/items/saveItem", {
         itemID,
         userID,
       });
@@ -91,7 +91,7 @@ export const CreatedItems = () => {
 
   const cancelSaveItem = async (itemID) => {
     try {
-      const response = await axios.put("http://localhost:3001/items/saveItem", {
+      const response = await axios.put("http://gaming-space.vercel.app/items/saveItem", {
         itemID,
         userID,
       });
@@ -102,7 +102,7 @@ export const CreatedItems = () => {
   };
   const handleDeleteItem = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:3001/items/${itemId}`);
+      await axios.delete(`http://gaming-space.vercel.app/items/${itemId}`);
       setCreatedItems(createdItems.filter((item) => item._id !== itemId));
       setDeleteMessage("Item deleted successfully.");
     } catch (err) {
