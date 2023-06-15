@@ -11,7 +11,7 @@ router.get("/itemsSearch", async (req, res) => {
     const district = req.query.district;
     const minPrice = req.query.minPrice;
     const maxPrice = req.query.maxPrice;
-    const category = req.query.category; // New category parameter
+    const category = req.query.category;
 
     let query = {};
 
