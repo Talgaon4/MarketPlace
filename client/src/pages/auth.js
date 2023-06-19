@@ -11,7 +11,6 @@ import {
   Col,
   Image,
 } from "react-bootstrap";
-import astronautImage from "../images/astronaut.png";
 
 export const Auth = () => {
   const [showRegister, setShowRegister] = useState(false);
