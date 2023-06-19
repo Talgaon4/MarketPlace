@@ -81,7 +81,7 @@ export const CreateItem = () => {
       try {
         if (item._id) {
           await axios.put(
-            `https://gaming-space.vercel.app/items/${item._id}`,
+            `https://gaming-space-api.onrender.com/items/${item._id}`,
             { ...item },
             {
               headers: { authorization: cookies.access_token },
@@ -90,7 +90,7 @@ export const CreateItem = () => {
           alert("Item Updated");
         } else {
           await axios.post(
-            "https://gaming-space.vercel.app/items/createItem",
+            "https://gaming-space-api.onrender.com/items/createItem",
             { ...item },
             {
               headers: { authorization: cookies.access_token },
