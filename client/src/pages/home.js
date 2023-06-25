@@ -29,9 +29,9 @@ export const Home = () => {
               className="btn2 btn-home px-4"
               size="lg"
               as={Link}
-              to="/create-item"
+              to="/search-items"
             >
-              Sell your products!
+              Explore community products!
             </Button>{" "}
           </div>
         </Col>
