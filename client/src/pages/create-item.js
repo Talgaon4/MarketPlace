@@ -18,7 +18,6 @@ export const CreateItem = () => {
     imageUrl: "",
     district: "",
     phoneNumber: "",
-    category: "", // New category state
     userOwner: userID,
   });
   const [error, setError] = useState("");
@@ -30,8 +29,7 @@ export const CreateItem = () => {
       item.cost <= 0 ||
       item.imageUrl.trim() === "" ||
       item.district.trim() === "" ||
-      item.phoneNumber.trim() === "" ||
-      item.category.trim() === ""
+      item.phoneNumber.trim() === ""
     ) {
       setError("Please fill in all fields.");
       return false;
@@ -42,8 +40,10 @@ export const CreateItem = () => {
 
   useEffect(() => {
     if (location.state && location.state.item) {
+      // If an item prop is present in the location state, update the item state
       setItem(location.state.item);
     } else {
+      // It's a new item, initialize the item state
       setItem({
         name: "",
         details: "",
@@ -51,7 +51,6 @@ export const CreateItem = () => {
         imageUrl: "",
         district: "",
         phoneNumber: "",
-        category: "",
         userOwner: userID,
       });
     }
@@ -61,6 +60,7 @@ export const CreateItem = () => {
     const { name, value } = event.target;
 
     if (name === "phoneNumber") {
+      // Validate phone number: allow only numbers
       const phoneNumberRegex = /^[0-9]+$/;
       if (value !== "" && !phoneNumberRegex.test(value)) {
         setError("Invalid phone number. Please enter only numbers.");
@@ -80,8 +80,11 @@ export const CreateItem = () => {
     if (validateForm()) {
       try {
         if (item._id) {
+          // If item has an ID, it is an existing item, so perform an update
+          console.log("cookies.access_token " + cookies.access_token);
+          console.log("item " + item);
           await axios.put(
-            `https://gaming-space-api.onrender.com/items/${item._id}`,
+            `http://localhost:3001/items/${item._id}`,
             { ...item },
             {
               headers: { authorization: cookies.access_token },
@@ -89,8 +92,9 @@ export const CreateItem = () => {
           );
           alert("Item Updated");
         } else {
+          // Otherwise, it is a new item, so perform a create
           await axios.post(
-            "https://gaming-space-api.onrender.com/items/createItem",
+            "http://localhost:3001/items/createItem",
             { ...item },
             {
               headers: { authorization: cookies.access_token },
@@ -112,14 +116,14 @@ export const CreateItem = () => {
       </div>
 
       <Row className="pb-5">
-        <Col xs={12} sm={12} md={12} lg={12} className="justify-content-center">
-          <Form onSubmit={handleSubmit} className="mx-auto">
+        <Col className="pb-5 d-flex align-items-center  justify-content-center ">
+          <Form onSubmit={handleSubmit} className="align-items-center">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="name"
                 value={item.name}
                 onChange={handleChange}
               />
@@ -182,23 +186,6 @@ export const CreateItem = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="category">
-              <Form.Label>Category</Form.Label>
-              <Form.Select
-                as="select"
-                name="category"
-                value={item.category}
-                onChange={handleChange}
-              >
-                <option value="">Select Category</option>
-                <option value="Keyboards">Keyboards</option>
-                <option value="Monitors">Monitors</option>
-                <option value="Screens">Screens</option>
-                <option value="Consoles">Consoles</option>
-                <option value="Other">Other</option>
-              </Form.Select>
-            </Form.Group>
-
             <div className="pt-3 d-grid gap-2">
               <Button variant="outline-info" type="submit">
                 {item._id ? "Edit Item" : "Create Item"}
@@ -206,9 +193,14 @@ export const CreateItem = () => {
             </div>
             {error && <p>{error}</p>}
           </Form>
-
-          <div className="astro-form">
-            <Image width={160} src={astronautImage} />
+        </Col>
+        <Col className="pb-5 d-flex justify-content-center" md="auto">
+          <div className="astro">
+            <Image
+              width={300}
+              rounded
+              src={astronautImage} // Use the imported image as the source
+            />
           </div>
         </Col>
       </Row>
