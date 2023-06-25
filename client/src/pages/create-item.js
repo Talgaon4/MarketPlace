@@ -7,6 +7,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import astronautImage from "../images/astronaut.png";
 
 export const CreateItem = () => {
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const userID = useGetUserID();
   const [cookies, _] = useCookies(["access_token"]);
   const navigate = useNavigate();
@@ -90,7 +92,7 @@ export const CreateItem = () => {
               headers: { authorization: cookies.access_token },
             }
           );
-          alert("Item Updated");
+          setShowSuccessAlert(true);
         } else {
           // Otherwise, it is a new item, so perform a create
           await axios.post(
@@ -100,7 +102,7 @@ export const CreateItem = () => {
               headers: { authorization: cookies.access_token },
             }
           );
-          alert("Item Created");
+          setShowSuccessAlert(true);
         }
         navigate("/");
       } catch (error) {
@@ -191,7 +193,25 @@ export const CreateItem = () => {
                 {item._id ? "Edit Item" : "Create Item"}
               </Button>
             </div>
-            {error && <p>{error}</p>}
+            {error && <Alert variant="danger">{error}</Alert>}
+            {showSuccessAlert && (
+              <Alert
+                variant="success"
+                onClose={() => setShowSuccessAlert(false)}
+                dismissible
+              >
+                Item {item._id ? "Updated" : "Created"} Successfully
+              </Alert>
+            )}
+            {showErrorAlert && (
+              <Alert
+                variant="danger"
+                onClose={() => setShowErrorAlert(false)}
+                dismissible
+              >
+                Error Occurred. Please try again.
+              </Alert>
+            )}
           </Form>
         </Col>
         <Col className="pb-5 d-flex justify-content-center" md="auto">
