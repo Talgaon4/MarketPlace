@@ -79,7 +79,8 @@ a {
   top: 30%;
   right: 7rem;
 }
-.astro-img {
+.astro-img,
+.moon-img {
   margin: 0 auto;
   width: 12vw;
 }
@@ -201,7 +202,8 @@ body {
 
 @media (max-width: 576px) {
   .astro,
-  .astro-img {
+  .astro-img,
+  .moon-img {
     display: none;
   }
 }

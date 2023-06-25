@@ -8,7 +8,7 @@ export const Footer = () => {
     <footer className="footer text-center text-white">
       <div className="container p-4 pb-0">
         <section className="mb-4 d-flex justify-content-center">
-          <a className=" m-1" href="httpss://www.linkedin.com/in/yovel-gabbay/">
+          <a className=" m-1" href="https://www.linkedin.com/in/yovel-gabbay/">
             <div className="icon-circle icon-1">
               <Image
                 width={28}
@@ -18,7 +18,7 @@ export const Footer = () => {
           </a>
           <a
             className=" m-1"
-            href="httpss://www.linkedin.com/in/tal-gaon-352176236/"
+            href="https://www.linkedin.com/in/tal-gaon-352176236/"
           >
             <div className="icon-circle icon-2">
               <Image
