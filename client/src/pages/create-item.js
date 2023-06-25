@@ -2,21 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { useCookies } from "react-cookie";
-import {
-  Form,
-  Button,
-  Container,
-  Image,
-  Row,
-  Col,
-  Alert,
-} from "react-bootstrap";
+import { Form, Button, Container, Image, Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import astronautImage from "../images/astronaut.png";
 
 export const CreateItem = () => {
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const userID = useGetUserID();
   const [cookies, _] = useCookies(["access_token"]);
   const navigate = useNavigate();
@@ -28,6 +18,7 @@ export const CreateItem = () => {
     imageUrl: "",
     district: "",
     phoneNumber: "",
+    category: "", // New category state
     userOwner: userID,
   });
   const [error, setError] = useState("");
@@ -39,7 +30,8 @@ export const CreateItem = () => {
       item.cost <= 0 ||
       item.imageUrl.trim() === "" ||
       item.district.trim() === "" ||
-      item.phoneNumber.trim() === ""
+      item.phoneNumber.trim() === "" ||
+      item.category.trim() === ""
     ) {
       setError("Please fill in all fields.");
       return false;
@@ -50,10 +42,8 @@ export const CreateItem = () => {
 
   useEffect(() => {
     if (location.state && location.state.item) {
-      // If an item prop is present in the location state, update the item state
       setItem(location.state.item);
     } else {
-      // It's a new item, initialize the item state
       setItem({
         name: "",
         details: "",
@@ -61,6 +51,7 @@ export const CreateItem = () => {
         imageUrl: "",
         district: "",
         phoneNumber: "",
+        category: "",
         userOwner: userID,
       });
     }
@@ -70,7 +61,6 @@ export const CreateItem = () => {
     const { name, value } = event.target;
 
     if (name === "phoneNumber") {
-      // Validate phone number: allow only numbers
       const phoneNumberRegex = /^[0-9]+$/;
       if (value !== "" && !phoneNumberRegex.test(value)) {
         setError("Invalid phone number. Please enter only numbers.");
@@ -90,27 +80,23 @@ export const CreateItem = () => {
     if (validateForm()) {
       try {
         if (item._id) {
-          // If item has an ID, it is an existing item, so perform an update
-          console.log("cookies.access_token " + cookies.access_token);
-          console.log("item " + item);
           await axios.put(
-            `http://localhost:3001/items/${item._id}`,
+            `https://gaming-space-api.onrender.com/items/${item._id}`,
             { ...item },
             {
               headers: { authorization: cookies.access_token },
             }
           );
-          setShowSuccessAlert(true);
+          alert("Item Updated");
         } else {
-          // Otherwise, it is a new item, so perform a create
           await axios.post(
-            "http://localhost:3001/items/createItem",
+            "https://gaming-space-api.onrender.com/items/createItem",
             { ...item },
             {
               headers: { authorization: cookies.access_token },
             }
           );
-          setShowSuccessAlert(true);
+          alert("Item Created");
         }
         navigate("/");
       } catch (error) {
@@ -126,14 +112,14 @@ export const CreateItem = () => {
       </div>
 
       <Row className="pb-5">
-        <Col className="pb-5 d-flex align-items-center  justify-content-center ">
-          <Form onSubmit={handleSubmit} className="align-items-center">
+        <Col xs={12} sm={12} md={12} lg={12} className="justify-content-center">
+          <Form onSubmit={handleSubmit} className="mx-auto">
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
-                placeholder="name"
+                placeholder="Name"
                 value={item.name}
                 onChange={handleChange}
               />
@@ -196,39 +182,33 @@ export const CreateItem = () => {
               />
             </Form.Group>
 
+            <Form.Group controlId="category">
+              <Form.Label>Category</Form.Label>
+              <Form.Select
+                as="select"
+                name="category"
+                value={item.category}
+                onChange={handleChange}
+              >
+                <option value="">Select Category</option>
+                <option value="Keyboards">Keyboards</option>
+                <option value="Monitors">Monitors</option>
+                <option value="Screens">Screens</option>
+                <option value="Consoles">Consoles</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+            </Form.Group>
+
             <div className="pt-3 d-grid gap-2">
               <Button variant="outline-info" type="submit">
                 {item._id ? "Edit Item" : "Create Item"}
               </Button>
             </div>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {showSuccessAlert && (
-              <Alert
-                variant="success"
-                onClose={() => setShowSuccessAlert(false)}
-                dismissible
-              >
-                Item {item._id ? "Updated" : "Created"} Successfully
-              </Alert>
-            )}
-            {showErrorAlert && (
-              <Alert
-                variant="danger"
-                onClose={() => setShowErrorAlert(false)}
-                dismissible
-              >
-                Error Occurred. Please try again.
-              </Alert>
-            )}
+            {error && <p>{error}</p>}
           </Form>
-        </Col>
-        <Col className="pb-5 d-flex justify-content-center" md="auto">
-          <div className="astro">
-            <Image
-              width={300}
-              rounded
-              src={astronautImage} // Use the imported image as the source
-            />
+
+          <div className="astro-form">
+            <Image width={160} src={astronautImage} />
           </div>
         </Col>
       </Row>
