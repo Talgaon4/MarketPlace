@@ -9,7 +9,7 @@ import { Home } from "./pages/home";
 import { SavedItems } from "./pages/saved-items";
 import { CreatedItems } from "./pages/created-items";
 import { SearchItems } from "./pages/search-items";
-import NotFound from "./components/NotFound"; // Import the NotFound component
+import NotFound from "./components/NotFound";
 
 function App() {
   return (

@@ -12,7 +12,7 @@ export const Footer = () => {
             <div className="icon-circle icon-1">
               <Image
                 width={28}
-                src={linkdinIcon} // Use the imported image as the source
+                src={linkdinIcon}
               />
             </div>
           </a>
@@ -23,7 +23,7 @@ export const Footer = () => {
             <div className="icon-circle icon-2">
               <Image
                 width={28}
-                src={linkdinIcon} // Use the imported image as the source
+                src={linkdinIcon} 
               />
             </div>
           </a>
@@ -31,7 +31,7 @@ export const Footer = () => {
             <div className="icon-circle icon-3">
               <Image
                 width={28}
-                src={githubIcon} // Use the imported image as the source
+                src={githubIcon} 
               />
             </div>
           </a>
