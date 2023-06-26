@@ -27,7 +27,7 @@ export const Footer = () => {
               />
             </div>
           </a>
-          <a className=" m-1" href="httpss://github.com/Yovelgabay/MarketPlace">
+          <a className=" m-1" href="https://github.com/Yovelgabay/MarketPlace">
             <div className="icon-circle icon-3">
               <Image
                 width={28}
