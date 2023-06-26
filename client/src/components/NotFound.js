@@ -14,9 +14,9 @@ const NotFound = () => {
           </h1>
         </Col>
         <Col sm={2}>
-          <div className="astro">
+          <div>
             <Image
-              className="astro-img align-self-center"
+              className="moon-img align-self-center"
               src={moonImage} // Use the imported image as the source
             />
           </div>

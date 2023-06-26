@@ -9,7 +9,6 @@ import {
   Container,
   Row,
   Col,
-  Image,
 } from "react-bootstrap";
 
 export const Auth = () => {

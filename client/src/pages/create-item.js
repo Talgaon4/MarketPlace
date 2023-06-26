@@ -2,7 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { useCookies } from "react-cookie";
-import { Form, Button, Container, Image, Row, Col } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  Image,
+  Row,
+  Col,
+  Alert,
+} from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import astronautImage from "../images/astronaut.png";
 
@@ -114,6 +122,7 @@ export const CreateItem = () => {
       <Row className="pb-5">
         <Col xs={12} sm={12} md={12} lg={12} className="justify-content-center">
           <Form onSubmit={handleSubmit} className="mx-auto">
+            {error && <Alert variant="danger">{error}</Alert>}
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -204,7 +213,6 @@ export const CreateItem = () => {
                 {item._id ? "Edit Item" : "Create Item"}
               </Button>
             </div>
-            {error && <p>{error}</p>}
           </Form>
 
           <div className="astro-form">

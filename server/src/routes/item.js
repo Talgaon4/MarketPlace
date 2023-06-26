@@ -122,15 +122,17 @@ router.put("/saveItem", async (req, res) => {
 // Update an item
 router.put("/:id", async (req, res) => {
   const itemId = req.params.id;
-  const updatedItem = req.body;
-
+  const { createdAt, ...updatedItem } = req.body; // Exclude createdAt field from the update
   try {
     const item = await ItemsModel.findByIdAndUpdate(itemId, updatedItem, {
       new: true,
+      runValidators: true, // Validate the updated item against the schema
+      omitUndefined: true, // Exclude undefined fields from the update
     });
     res.status(200).json(item);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -144,7 +146,6 @@ router.get("/savedItems/:userId", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 // Get created items by user ID
 router.get("/createdItems/:userId", async (req, res) => {
